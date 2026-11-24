@@ -27,7 +27,7 @@
     </div>
 @endif
 
-<form action="/user/checkout" method="POST">
+<form action="/user/checkout" method="POST" enctype="multipart/form-data">
     @csrf
 
     <!-- PASS ITEM IDS YANG TERPILIH DARI KERANJANG -->
@@ -125,6 +125,22 @@
                             <div class="text-muted" style="font-size:0.825rem; margin-top:2px;">No. Rekening: <strong>987654321</strong> a.n PT PustakaMart Indonesia</div>
                         </div>
                     </label>
+                </div>
+
+                <!-- UPLOAD BUKTI TRANSFER PEMBAYARAN -->
+                <div class="form-group" style="margin-top:18px; padding-top:16px; border-top:1px dashed var(--border);">
+                    <label class="form-label" style="font-weight:700;">
+                        📸 Upload Bukti Transfer Pembayaran <span style="color:var(--danger); font-weight:800;">* (Wajib)</span>
+                    </label>
+                    <input type="file" 
+                           name="payment_receipt" 
+                           class="form-control" 
+                           required 
+                           accept="image/*,.pdf"
+                           style="padding:8px 12px;">
+                    <small class="text-muted" style="font-size:0.8rem; display:block; margin-top:6px; line-height:1.4;">
+                        Unggah foto/screenshot bukti transfer (JPG, PNG, WEBP, atau PDF maks 10MB) agar pesanan Anda dapat segera dikonfirmasi dan dikemas oleh Admin.
+                    </small>
                 </div>
             </div>
         </div>

@@ -50,8 +50,10 @@ class BookController extends Controller
 
         $books = $query->orderBy('id', 'desc')->paginate(10)->withQueryString();
         $categories = Category::withCount('books')->orderBy('name')->get();
+        $totalAvailable = Book::where('stock_sale', '>', 0)->count();
+        $totalEmpty = Book::where('stock_sale', '<=', 0)->count();
 
-        return view('admin.books.index', compact('books', 'categories'));
+        return view('admin.books.index', compact('books', 'categories', 'totalAvailable', 'totalEmpty'));
     }
 
     public function create()
@@ -65,19 +67,34 @@ class BookController extends Controller
         $request->validate([
             'title' => 'required|string|max:100', 
             'author' => 'required|string|max:100', 
-            'publisher' => 'nullable|string|max:100',
-            'year' => 'nullable|integer|digits:4|min:1900|max:2099',
-            'isbn' => 'nullable|string|max:30',
-            'category_id' => 'nullable|exists:categories,id',
+            'publisher' => 'required|string|max:100',
+            'year' => 'required|integer|digits:4|min:1900|max:2099',
+            'isbn' => 'required|string|max:30',
+            'category_id' => 'required|exists:categories,id',
             'price' => 'required|numeric|min:0|max:999999999',
             'stock_sale' => 'required|integer|min:0|max:999999', 
-            'description' => 'nullable|string|max:5000',
-            'cover' => 'nullable|file|mimes:jpeg,png,jpg,webp,jfif,avif,gif|max:10240'
+            'description' => 'required|string|max:5000',
+            'cover' => 'required|file|mimes:jpeg,png,jpg,webp,jfif,avif,gif|max:10240'
         ], [
             'title.required' => 'Judul buku wajib diisi.',
             'author.required' => 'Penulis buku wajib diisi.',
-            'price.required' => 'Harga buku wajib diisi.',
+            'publisher.required' => 'Penerbit buku wajib diisi.',
+            'year.required' => 'Tahun terbit buku wajib diisi.',
+            'year.digits' => 'Tahun terbit harus berupa 4 digit angka.',
+            'year.min' => 'Tahun terbit minimal tahun 1900.',
+            'year.max' => 'Tahun terbit maksimal tahun 2099.',
+            'isbn.required' => 'ISBN buku wajib diisi.',
+            'category_id.required' => 'Kategori buku wajib dipilih.',
+            'category_id.exists' => 'Kategori buku yang dipilih tidak valid.',
+            'price.required' => 'Harga jual buku wajib diisi.',
+            'price.numeric' => 'Harga buku harus berupa angka.',
+            'price.min' => 'Harga buku tidak boleh kurang dari 0.',
             'stock_sale.required' => 'Stok buku wajib diisi.',
+            'stock_sale.integer' => 'Stok buku harus berupa angka bulat.',
+            'stock_sale.min' => 'Stok buku tidak boleh kurang dari 0.',
+            'description.required' => 'Sinopsis / deskripsi buku wajib diisi.',
+            'cover.required' => 'File cover buku wajib diunggah.',
+            'cover.file' => 'Cover buku harus berupa file gambar.',
             'cover.mimes' => 'Format file cover harus berupa gambar (JPG, PNG, WEBP).',
             'cover.max' => 'Ukuran file cover maksimal adalah 10 MB.',
         ]);
@@ -183,14 +200,31 @@ class BookController extends Controller
             ->whereHas('order', function($q) {
                 $q->whereIn('status', ['Waiting Confirmation', 'Processing', 'Shipped']);
             })->count();
+
         if ($activeOrderCount > 0) {
             return back()->with('error', "Buku '{$book->title}' tidak dapat dihapus karena masih ada pesanan berjalan yang belum selesai.");
+        }
+
+        // Hapus dari keranjang user jika ada
+        \App\Models\CartDetail::where('book_id', $id)->delete();
+
+        // Putus relasi di order_details selesai jika memungkinkan, agar riwayat pesanan tetap tercatat
+        try {
+            \App\Models\OrderDetail::where('book_id', $id)->update(['book_id' => null]);
+        } catch (\Throwable $e) {
+            // Kolom book_id tidak nullable, lanjutkan
         }
 
         if ($book->cover && file_exists(public_path('uploads/covers/' . $book->cover))) {
             @unlink(public_path('uploads/covers/' . $book->cover));
         }
-        $book->delete();
+
+        try {
+            $book->delete();
+        } catch (\Throwable $e) {
+            return back()->with('error', "Buku '{$book->title}' tidak dapat dihapus karena masih terkait dengan data transaksi riwayat pesanan.");
+        }
+
         return redirect('/admin/books')->with('success', 'Buku berhasil dihapus.');
     }
 

@@ -55,14 +55,14 @@
 
                 <div class="form-group">
                     <label class="form-label">Nomor Telepon / WhatsApp <span style="color:var(--danger); font-weight:700;">*</span></label>
-                    <input type="tel" name="phone" class="form-control" required placeholder="Contoh: 081234567890" value="{{ old('phone') }}">
-                    <small class="text-muted" style="font-size:0.8rem; display:block; margin-top:4px;">Dibutuhkan untuk konfirmasi pesanan &amp; koordinasi kurir ekspedisi.</small>
+                    <input type="tel" name="phone" class="form-control" required minlength="10" maxlength="15" placeholder="Contoh: 081234567890" value="{{ old('phone') }}" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 15);">
+                    <small class="text-muted" style="font-size:0.8rem; display:block; margin-top:4px;">Dibutuhkan untuk konfirmasi pesanan &amp; koordinasi kurir ekspedisi (10-15 digit angka).</small>
                 </div>
 
-                 <div class="form-group">
-                    <label class="form-label"> NIK <span style="color:var(--danger); font-weight:700;">*</span></label>
-                    <input type="tel" name="nik" class="form-control" required placeholder="Contoh: 3171000000" value="{{ old('nik') }}">
-                    <small class="text-muted" style="font-size:0.8rem; display:block; margin-top:4px;">Dibutuhkan untuk data user </small>
+                <div class="form-group">
+                    <label class="form-label">NIK (Nomor Induk Kependudukan) <span style="color:var(--danger); font-weight:700;">*</span></label>
+                    <input type="text" name="nik" class="form-control" required maxlength="16" minlength="16" placeholder="Contoh: 3171012345670001 (16 digit)" value="{{ old('nik') }}" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 16);">
+                    <small class="text-muted" style="font-size:0.8rem; display:block; margin-top:4px;">Wajib 16 digit angka unik sesuai data KTP.</small>
                 </div>
 
                 <div class="form-group">

@@ -12,7 +12,7 @@
 <div class="flex-between mb-4" style="flex-wrap:wrap; gap:12px;">
     <div>
         <h1 style="margin-bottom:4px; font-size:clamp(1.3rem, 4vw, 1.8rem);">Data Buku</h1>
-        <p class="text-muted" style="margin:0; font-size:0.88rem;">Kelola katalog buku, stok, harga, dan pantau peminjaman aktif</p>
+        <p class="text-muted" style="margin:0; font-size:0.88rem;">Kelola katalog buku fisik original, stok penjualan, harga, dan penerbit</p>
     </div>
     <div style="display:flex; gap:8px; flex-wrap:wrap;">
         <a href="/admin/books/print?category_id={{ request('category_id') }}" target="_blank" class="btn btn-outline btn-sm" style="font-weight:700; border-color:#2563eb; color:#2563eb; background:#eff6ff;">
@@ -46,8 +46,8 @@
                 <label class="form-label" style="font-size:0.8rem; margin-bottom:4px;">Status Stok</label>
                 <select name="stock_status" class="form-control">
                     <option value="">Semua Stok</option>
-                    <option value="sale_available" {{ request('stock_status') == 'sale_available' ? 'selected' : '' }}>Stok Tersedia (>0)</option>
-                    <option value="sale_empty" {{ request('stock_status') == 'sale_empty' ? 'selected' : '' }}>Stok Habis (0)</option>
+                    <option value="sale_available" {{ request('stock_status') == 'sale_available' ? 'selected' : '' }}>Stok Tersedia ({{ $totalAvailable }})</option>
+                    <option value="sale_empty" {{ request('stock_status') == 'sale_empty' ? 'selected' : '' }}>Stok Habis ({{ $totalEmpty }})</option>
                 </select>
             </div>
             <div style="display:flex; gap:6px;">

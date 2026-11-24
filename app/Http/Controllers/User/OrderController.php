@@ -66,6 +66,37 @@ class OrderController extends Controller
         }
     }
 
+    public function uploadReceipt(Request $request, $id)
+    {
+        $order = Order::where('user_id', Auth::id())->findOrFail($id);
+
+        if ($order->status !== 'Waiting Confirmation') {
+            return back()->with('error', 'Bukti pembayaran hanya dapat diunggah saat status pesanan masih Menunggu Konfirmasi.');
+        }
+
+        $request->validate([
+            'payment_receipt' => 'required|file|mimes:jpeg,png,jpg,webp,pdf|max:10240'
+        ], [
+            'payment_receipt.required' => 'Pilih file bukti pembayaran terlebih dahulu.',
+            'payment_receipt.file' => 'Bukti pembayaran harus berupa file gambar atau PDF.',
+            'payment_receipt.mimes' => 'Format file harus JPG, PNG, WEBP, atau PDF.',
+            'payment_receipt.max' => 'Ukuran file maksimal adalah 10 MB.'
+        ]);
+
+        $file = $request->file('payment_receipt');
+        $uploadDir = public_path('uploads/receipts');
+        if (!file_exists($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
+        $ext = $file->getClientOriginalExtension() ?: 'jpg';
+        $filename = 'receipt_' . time() . '_' . strtoupper(bin2hex(random_bytes(3))) . '.' . strtolower($ext);
+        $file->move($uploadDir, $filename);
+
+        $order->update(['payment_receipt' => $filename]);
+
+        return back()->with('success', 'Bukti pembayaran berhasil diunggah! Admin akan segera memeriksa dan mengonfirmasi pesanan Anda.');
+    }
+
     public function printInvoice($id)
     {
         $order = Order::with(['details.book', 'user'])->where('user_id', Auth::id())->findOrFail($id);

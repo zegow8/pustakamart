@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\CartDetail;
 use App\Models\Order;
 use App\Models\OrderDetail;
-use App\Models\Payment;
 use App\Models\Book;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -60,12 +59,13 @@ class CheckoutController extends Controller
 
     public function process(Request $request)
     {
-        // VALIDASI WAJIB SEMUA FIELD (HANYA TRANSFER BANK BCA & MANDIRI)
+        // VALIDASI WAJIB SEMUA FIELD TERMASUK BUKTI TRANSFER
         $request->validate([
             'receiver_name' => 'required|string|max:100',
             'receiver_phone' => 'required|string|max:20',
             'shipping_address' => 'required|string|min:5',
             'payment_method' => 'required|string',
+            'payment_receipt' => 'required|file|mimes:jpeg,png,jpg,webp,pdf|max:10240',
             'items' => 'required|array|min:1',
             'items.*' => 'integer'
         ], [
@@ -73,6 +73,10 @@ class CheckoutController extends Controller
             'receiver_phone.required' => 'Nomor HP penerima wajib diisi.',
             'shipping_address.required' => 'Alamat pengiriman lengkap wajib diisi.',
             'payment_method.required' => 'Metode pembayaran wajib dipilih.',
+            'payment_receipt.required' => 'Bukti transfer pembayaran wajib diunggah.',
+            'payment_receipt.file' => 'Bukti transfer harus berupa file gambar atau PDF.',
+            'payment_receipt.mimes' => 'Format file bukti transfer harus berupa gambar (JPG, PNG, WEBP) atau PDF.',
+            'payment_receipt.max' => 'Ukuran file bukti transfer maksimal adalah 10 MB.',
             'items.required' => 'Pilih minimal satu buku untuk dibeli.',
         ]);
 
@@ -113,6 +117,19 @@ class CheckoutController extends Controller
             $invoice = 'RP-' . date('Ymd') . '-' . strtoupper(bin2hex(random_bytes(3)));
             $tracking = 'RPN' . date('ymd') . strtoupper(bin2hex(random_bytes(4)));
 
+            // Simpan File Bukti Transfer
+            $receiptFilename = null;
+            if ($request->hasFile('payment_receipt')) {
+                $file = $request->file('payment_receipt');
+                $uploadDir = public_path('uploads/receipts');
+                if (!file_exists($uploadDir)) {
+                    mkdir($uploadDir, 0777, true);
+                }
+                $ext = $file->getClientOriginalExtension() ?: 'jpg';
+                $receiptFilename = 'receipt_' . time() . '_' . strtoupper(bin2hex(random_bytes(3))) . '.' . strtolower($ext);
+                $file->move($uploadDir, $receiptFilename);
+            }
+
             // Buat Order: STATUS AWAL = 'Waiting Confirmation' (Menunggu ACC Konfirmasi Admin)
             $order = Order::create([
                 'user_id' => $userId,
@@ -123,6 +140,7 @@ class CheckoutController extends Controller
                 'shipping_address' => $request->shipping_address,
                 'note' => $request->note,
                 'payment_method' => $request->payment_method,
+                'payment_receipt' => $receiptFilename,
                 'status' => 'Waiting Confirmation', // Menunggu Konfirmasi Admin
                 'tracking_number' => $tracking
             ]);
@@ -144,25 +162,8 @@ class CheckoutController extends Controller
                 $freshBook->decrement('stock_sale', $it->qty);
             }
 
-            // Catat Pembayaran
-            Payment::create([
-                'user_id' => $userId,
-                'type' => 'order',
-                'order_id' => $order->id,
-                'amount' => $grandTotal,
-                'method' => $request->payment_method
-            ]);
-
             // HANYA HAPUS ITEM YANG DICHECKOUT DARI KERANJANG
             CartDetail::whereIn('id', $cartItems->pluck('id'))->delete();
-
-            // Kirim Notifikasi ke User
-            \App\Models\Notification::create([
-                'user_id' => $userId,
-                'title' => 'Menunggu Konfirmasi Admin ⏳',
-                'message' => "Pesanan #$invoice telah dibuat dan sedang menunggu konfirmasi pembayaran dari admin sebelum dikemas.",
-                'link' => '/user/transactions/' . $order->id
-            ]);
 
             DB::commit();
             return redirect('/user/transactions')->with('success', "Pesanan #$invoice berhasil dibuat! Pembayaran Anda sedang menunggu konfirmasi dari admin.");

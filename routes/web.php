@@ -48,6 +48,7 @@ Route::middleware(['user'])->group(function () {
     Route::get('/user/transactions', [OrderController::class, 'index']);
     Route::get('/user/transactions/{id}', [OrderController::class, 'show']);
     Route::get('/user/transactions/{id}/print', [OrderController::class, 'printInvoice']);
+    Route::post('/user/transactions/{id}/upload-receipt', [OrderController::class, 'uploadReceipt']);
     Route::post('/user/transactions/cancel', [OrderController::class, 'cancel']);
 
     // Profil

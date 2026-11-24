@@ -222,6 +222,46 @@
                 </div>
             </div>
 
+            <!-- BUKTI TRANSFER PEMBAYARAN -->
+            <div style="margin-bottom:18px; padding:14px; background:#f8fafc; border-radius:8px; border:1px solid var(--border);">
+                <div style="font-size:0.75rem; color:var(--text-muted); font-weight:700; text-transform:uppercase; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
+                    <span>📸 Bukti Transfer Pembayaran</span>
+                    @if($order->payment_receipt)
+                        <span style="font-size:0.7rem; background:#dcfce7; color:#166534; padding:2px 8px; border-radius:4px; font-weight:700;">Terunggah</span>
+                    @else
+                        <span style="font-size:0.7rem; background:#fee2e2; color:#991b1b; padding:2px 8px; border-radius:4px; font-weight:700;">Belum Ada</span>
+                    @endif
+                </div>
+                @if($order->payment_receipt)
+                    @php
+                        $ext = pathinfo($order->payment_receipt, PATHINFO_EXTENSION);
+                        $isPdf = strtolower($ext) === 'pdf';
+                    @endphp
+                    @if($isPdf)
+                        <div style="padding:10px 0;">
+                            <a href="{{ asset('uploads/receipts/' . $order->payment_receipt) }}" target="_blank" class="btn btn-outline btn-sm" style="font-weight:700; color:#2563eb; border-color:#2563eb; background:#eff6ff; display:inline-flex; align-items:center; gap:6px;">
+                                📄 Buka Dokumen Bukti Transfer (PDF) &rarr;
+                            </a>
+                        </div>
+                    @else
+                        <div style="border-radius:6px; overflow:hidden; border:1px solid var(--border); background:white; margin-bottom:8px; text-align:center; padding:4px;">
+                            <a href="{{ asset('uploads/receipts/' . $order->payment_receipt) }}" target="_blank" title="Klik untuk memperbesar bukti transfer">
+                                <img src="{{ asset('uploads/receipts/' . $order->payment_receipt) }}" alt="Bukti Transfer" style="max-width:100%; max-height:220px; object-fit:contain; border-radius:4px; display:block; margin:0 auto;">
+                            </a>
+                        </div>
+                        <div style="text-align:center;">
+                            <a href="{{ asset('uploads/receipts/' . $order->payment_receipt) }}" target="_blank" style="font-size:0.8rem; font-weight:700; color:var(--primary); text-decoration:none; display:inline-flex; align-items:center; gap:4px;">
+                                🔍 Klik untuk Lihat Ukuran Penuh &rarr;
+                            </a>
+                        </div>
+                    @endif
+                @else
+                    <div style="font-size:0.82rem; color:#94a3b8; font-style:italic; padding:6px 0;">
+                        Tidak ada file bukti transfer yang dilampirkan.
+                    </div>
+                @endif
+            </div>
+
             <!-- Form Update Status Sesuai Alur Pasti -->
             @if(!in_array($order->status, ['Completed', 'Rejected', 'Cancelled']))
                 <form action="/admin/orders/update/{{ $order->id }}" method="POST">

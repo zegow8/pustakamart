@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Chat;
 use App\Models\User;
-use App\Models\Notification;
 use Illuminate\Support\Facades\Auth;
 
 class ChatController extends Controller
@@ -124,14 +123,6 @@ class ChatController extends Controller
             'sender' => 'admin',
             'message' => trim($request->message),
             'is_read' => 0
-        ]);
-
-        // Kirim Notifikasi ke User bahwa Admin membalas pesan
-        Notification::create([
-            'user_id' => $request->user_id,
-            'title' => 'Pesan Baru dari Admin 💬',
-            'message' => 'Admin telah membalas pesan Anda: "' . \Illuminate\Support\Str::limit($request->message, 50) . '"',
-            'link' => '/user/chat'
         ]);
 
         return redirect('/admin/chats?user_id=' . $request->user_id)->with('success', 'Pesan berhasil dikirim ke pelanggan.');

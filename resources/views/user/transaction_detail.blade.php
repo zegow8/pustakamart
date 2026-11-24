@@ -256,6 +256,48 @@
                 <div style="font-weight:700; color:var(--primary); font-size:0.92rem;">{{ $order->payment_method ?? 'Transfer Bank' }}</div>
             </div>
 
+            <!-- BUKTI TRANSFER PEMBAYARAN -->
+            <div style="margin-bottom:16px; padding:12px; background:#f8fafc; border-radius:8px; border:1px solid var(--border);">
+                <div style="font-size:0.72rem; text-transform:uppercase; font-weight:700; color:var(--text-muted); margin-bottom:6px;">Bukti Transfer Anda</div>
+                @if($order->payment_receipt)
+                    @php
+                        $ext = pathinfo($order->payment_receipt, PATHINFO_EXTENSION);
+                        $isPdf = strtolower($ext) === 'pdf';
+                    @endphp
+                    @if($isPdf)
+                        <a href="{{ asset('uploads/receipts/' . $order->payment_receipt) }}" target="_blank" class="btn btn-outline btn-sm" style="font-size:0.8rem; font-weight:700; color:#2563eb; border-color:#2563eb; background:#eff6ff; display:inline-flex; align-items:center; gap:6px;">
+                            📄 Buka Bukti Dokumen PDF &rarr;
+                        </a>
+                    @else
+                        <div style="border-radius:6px; overflow:hidden; border:1px solid var(--border); background:white; margin-bottom:6px; text-align:center;">
+                            <a href="{{ asset('uploads/receipts/' . $order->payment_receipt) }}" target="_blank" title="Klik untuk melihat bukti transfer">
+                                <img src="{{ asset('uploads/receipts/' . $order->payment_receipt) }}" alt="Bukti Transfer" style="width:100%; max-height:160px; object-fit:contain; display:block;">
+                            </a>
+                        </div>
+                        <div style="text-align:center;">
+                            <a href="{{ asset('uploads/receipts/' . $order->payment_receipt) }}" target="_blank" style="font-size:0.75rem; font-weight:700; color:var(--primary); text-decoration:none;">
+                                🔍 Lihat Ukuran Penuh
+                            </a>
+                        </div>
+                    @endif
+                @else
+                    <div style="font-size:0.8rem; color:#94a3b8; font-style:italic; margin-bottom:6px;">Belum ada bukti pembayaran</div>
+                @endif
+
+                @if($order->status === 'Waiting Confirmation')
+                    <form action="/user/transactions/{{ $order->id }}/upload-receipt" method="POST" enctype="multipart/form-data" style="margin-top:10px; padding-top:10px; border-top:1px dashed var(--border);">
+                        @csrf
+                        <label class="form-label" style="font-size:0.75rem; font-weight:700; margin-bottom:4px; display:block;">
+                            {{ $order->payment_receipt ? 'Ganti Bukti Transfer' : 'Upload Bukti Transfer Sekarang' }}
+                        </label>
+                        <input type="file" name="payment_receipt" class="form-control" required accept="image/*,.pdf" style="font-size:0.75rem; padding:6px 8px; margin-bottom:8px;">
+                        <button type="submit" class="btn btn-primary btn-sm btn-block" style="font-size:0.8rem; font-weight:700; padding:8px;">
+                            📤 Simpan Bukti Transfer
+                        </button>
+                    </form>
+                @endif
+            </div>
+
             @if(in_array($order->status, ['Waiting Confirmation', 'Processing']))
                 <div style="margin-top:20px; padding-top:16px; border-top:1px solid var(--border);">
                     <form action="/user/transactions/cancel" method="POST">

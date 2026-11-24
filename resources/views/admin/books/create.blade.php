@@ -23,20 +23,20 @@
                     <input type="text" name="author" class="form-control" required maxlength="50" placeholder="Maksimal 50 karakter" value="{{ old('author') }}">
                 </div>
                 <div class="form-group mb-3">
-                    <label class="form-label">Penerbit</label>
-                    <input type="text" name="publisher" class="form-control" maxlength="50" placeholder="Maksimal 50 karakter" value="{{ old('publisher') }}">
+                    <label class="form-label">Penerbit <span style="color:var(--danger); font-weight:700;">*</span></label>
+                    <input type="text" name="publisher" class="form-control" required maxlength="50" placeholder="Maksimal 50 karakter" value="{{ old('publisher') }}">
                 </div>
                 <div class="form-group mb-3">
-                    <label class="form-label">Tahun Terbit</label>
-                    <input type="number" name="year" class="form-control" min="1900" max="2099" placeholder="Contoh: 2024 (4 digit)" oninput="if(this.value.length > 4) this.value = this.value.slice(0, 4);" value="{{ old('year') }}">
+                    <label class="form-label">Tahun Terbit <span style="color:var(--danger); font-weight:700;">*</span></label>
+                    <input type="number" name="year" class="form-control" required min="1900" max="2099" placeholder="Contoh: 2024 (4 digit)" oninput="if(this.value.length > 4) this.value = this.value.slice(0, 4);" value="{{ old('year') }}">
                 </div>
                 <div class="form-group mb-3">
-                    <label class="form-label">ISBN</label>
-                    <input type="text" name="isbn" class="form-control" maxlength="30" placeholder="Contoh: 978-602-03-8591-4" value="{{ old('isbn') }}">
+                    <label class="form-label">ISBN <span style="color:var(--danger); font-weight:700;">*</span></label>
+                    <input type="text" name="isbn" class="form-control" required maxlength="30" placeholder="Contoh: 978-602-03-8591-4" value="{{ old('isbn') }}">
                 </div>
                 <div class="form-group mb-3">
-                    <label class="form-label">Kategori Buku</label>
-                    <select name="category_id" class="form-control">
+                    <label class="form-label">Kategori Buku <span style="color:var(--danger); font-weight:700;">*</span></label>
+                    <select name="category_id" class="form-control" required>
                         <option value="">- Pilih Kategori -</option>
                         @foreach($categories as $c)
                             <option value="{{ $c->id }}" {{ old('category_id') == $c->id ? 'selected' : '' }}>{{ $c->name }}</option>
@@ -60,12 +60,12 @@
                     <small class="text-muted" style="display:block; margin-top:4px; font-size:0.75rem;">Bisa diketik langsung atau tekan tombol - / +</small>
                 </div>
                 <div class="form-group mb-3">
-                    <label class="form-label">Cover Buku (JPG / PNG / WEBP maks 10MB)</label>
-                    <input type="file" name="cover" class="form-control" accept="image/*">
+                    <label class="form-label">Cover Buku (JPG / PNG / WEBP maks 10MB) <span style="color:var(--danger); font-weight:700;">*</span></label>
+                    <input type="file" name="cover" class="form-control" required accept="image/*">
                 </div>
                 <div class="form-group mb-3">
-                    <label class="form-label">Sinopsis &amp; Deskripsi Buku</label>
-                    <textarea name="description" class="form-control" maxlength="5000" style="min-height:120px;" placeholder="Tuliskan ringkasan sinopsis cerita atau isi buku...">{{ old('description') }}</textarea>
+                    <label class="form-label">Sinopsis &amp; Deskripsi Buku <span style="color:var(--danger); font-weight:700;">*</span></label>
+                    <textarea name="description" class="form-control" required maxlength="5000" style="min-height:120px;" placeholder="Tuliskan ringkasan sinopsis cerita atau isi buku...">{{ old('description') }}</textarea>
                 </div>
             </div>
         </div>

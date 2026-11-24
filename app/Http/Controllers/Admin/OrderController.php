@@ -5,7 +5,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Book;
-use App\Models\Notification;
 
 class OrderController extends Controller
 {
@@ -110,37 +109,6 @@ class OrderController extends Controller
             'status' => $newStatus, 
             'tracking_number' => $trackingNumber
         ]);
-
-        // Kirim Notifikasi ke User Sesuai Perubahan Status
-        if ($newStatus === 'Processing') {
-            Notification::create([
-                'user_id' => $order->user_id,
-                'title' => 'Pembayaran Dikonfirmasi ✅',
-                'message' => "Pembayaran pesanan #{$order->invoice_code} telah dikonfirmasi oleh admin. Pesanan Anda kini sedang dikemas.",
-                'link' => '/user/transactions/' . $order->id
-            ]);
-        } elseif ($newStatus === 'Shipped') {
-            Notification::create([
-                'user_id' => $order->user_id,
-                'title' => 'Pesanan Dikirim 🚚',
-                'message' => "Pesanan #{$order->invoice_code} sedang dikirim dengan no. resi: " . ($trackingNumber ?? '-'),
-                'link' => '/user/transactions/' . $order->id
-            ]);
-        } elseif ($newStatus === 'Completed') {
-            Notification::create([
-                'user_id' => $order->user_id,
-                'title' => 'Pesanan Selesai 🎉',
-                'message' => "Pesanan #{$order->invoice_code} telah selesai dan diterima. Terima kasih telah berbelanja di PustakaMart!",
-                'link' => '/user/transactions/' . $order->id
-            ]);
-        } elseif ($newStatus === 'Rejected') {
-            Notification::create([
-                'user_id' => $order->user_id,
-                'title' => 'Pesanan Ditolak ❌',
-                'message' => "Mohon maaf, pembayaran atau pesanan #{$order->invoice_code} ditolak oleh admin.",
-                'link' => '/user/transactions/' . $order->id
-            ]);
-        }
 
         return back()->with('success', 'Status pesanan berhasil diperbarui menjadi: ' . $newStatus . '.');
     }
