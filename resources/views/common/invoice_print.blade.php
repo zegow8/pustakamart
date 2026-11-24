@@ -192,7 +192,7 @@
                     <div class="brand-title">PUSTAKAMART</div>
                     <div class="brand-sub">
                         <strong>Toko Buku Fisik Original &amp; Terpercaya</strong><br>
-                        Jl. Ir. H. Juanda No. 84, Kota Sukabumi, Jawa Barat<br>
+                        Jl kebon kosong kemayoran jakarta pusat<br>
                         WhatsApp: 0815-4718-4307 | Website: pustakamart.id
                     </div>
                 </div>
@@ -288,7 +288,7 @@
                 * Terima kasih telah berbelanja buku original dan mendukung literasi Indonesia.
             </div>
             <div class="signature-box">
-                <div style="font-size: 12px; color: #475569;">Sukabumi, {{ date('d F Y') }}</div>
+                <div style="font-size: 12px; color: #475569;">Jakarta Pusat, {{ date('d F Y') }}</div>
                 <div style="font-size: 12px; font-weight: 700; color: #0f172a; margin-top: 4px;">Pustakawan / Kasir,</div>
                 <div class="signature-line"></div>
                 <div style="font-size: 12px; font-weight: 700; color: #0f172a; margin-top: 4px;">PustakaMart Official</div>
