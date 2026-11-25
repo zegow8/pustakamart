@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Saya - User Area - PustakaMart</title>
+    <link rel="icon" type="image/png" href="images/pustakamart.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+        html, body { width: 100%; max-width: 100vw; overflow-x: hidden; margin: 0; padding: 0; background-color: var(--bg-main); font-family: 'Inter', sans-serif; }
+        body { display: flex; flex-direction: column; min-height: 100vh; min-width: 0; }
+        .badge-cart { background: #800000; color: white; font-size: 0.72rem; font-weight: 800; padding: 2px 7px; border-radius: 12px; line-height: 1.2; }
+        .badge-notif { background: #dc2626; color: white; font-size: 0.65rem; padding: 2px 6px; border-radius: 10px; font-weight: 700; margin-left: 4px; }
+        .status-badge { font-size: 0.72rem; font-weight: 700; padding: 3px 8px; border-radius: 14px; white-space: nowrap; display: inline-block; }
+        .status-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; text-align: center; }
+        .dashboard-2col { display: grid; grid-template-columns: 1.25fr 1fr; gap: 20px; align-items: start; }
+        @media (max-width: 900px) {
+            .status-grid-4 { grid-template-columns: repeat(2, 1fr); }
+            .dashboard-2col { grid-template-columns: 1fr; }
+        }
+    </style>
+    <script src="assets/js/script.js"></script>
+    <script>checkAuthGuard("user");</script>
+</head>
+<body>
+
+<nav class="navbar-user" style="background:white; border-bottom:2px solid #800000; box-shadow:0 1px 3px rgba(0,0,0,0.05); width:100%; min-width:0;">
+    <div class="container" style="max-width:1200px; margin:0 auto; padding:0 16px;">
+        <!-- Baris Atas -->
+        <div class="navbar-user-top" style="display:flex; justify-content:space-between; align-items:center; padding:12px 0; flex-wrap:wrap; gap:8px;">
+            <a href="user-dashboard.html" class="brand" style="display:inline-flex; align-items:center; gap:9px; text-decoration:none;">
+                <img src="images/pustakamart.png" alt="PustakaMart" style="height:34px; width:34px; object-fit:contain;">
+                <span style="font-size:1.4rem; font-weight:800; color:var(--primary); letter-spacing:-0.5px;">PUSTAKAMART</span>
+            </a>
+            <div class="navbar-user-icons" style="display:flex; gap:18px; align-items:center; flex-wrap:wrap;">
+                <a href="user-catalog.html" style="color:var(--text-main); font-size:0.9rem; font-weight:600; text-decoration:none;">📚 Katalog Buku</a>
+                <a href="cart.html" style="display:inline-flex; align-items:center; gap:6px; color:var(--text-main); font-size:0.9rem; font-weight:600; text-decoration:none;">
+                    <span>🛒 Keranjang</span>
+                    <span class="badge-cart">2</span>
+                </a>
+                <a href="user-notifications.html" style="display:inline-flex; align-items:center; gap:5px; color:var(--text-main); font-size:0.9rem; font-weight:600; text-decoration:none;">
+                    <span>🔔 Notifikasi</span>
+                    <span class="badge-notif" style="margin-left:0;">2</span>
+                </a>
+                <a href="profile.html" style="color:var(--text-main); font-size:0.9rem; font-weight:600; text-decoration:none;">👤 <span data-auth-name>rain</span></a>
+                <a href="index.html" class="logout-link" style="color:var(--danger) !important; font-size:0.9rem; font-weight:600; text-decoration:none;">Logout</a>
+            </div>
+        </div>
+        <!-- Baris Bawah (Tab) -->
+        <div class="navbar-user-bottom" style="border-top:1px solid #fee2e2; display:flex; gap:24px; padding:0; overflow-x:auto; white-space:nowrap;">
+            <a href="user-dashboard.html" class="active" style="color:#800000; font-weight:600; font-size:0.9rem; text-decoration:none; padding:12px 0; border-bottom:3px solid #800000;">Beranda</a>
+            <a href="user-catalog.html" style="color:#64748b; font-weight:600; font-size:0.9rem; text-decoration:none; padding:12px 0; border-bottom:3px solid transparent;">Katalog Buku</a>
+            <a href="transactions.html" style="color:#64748b; font-weight:600; font-size:0.9rem; text-decoration:none; padding:12px 0; border-bottom:3px solid transparent;">Riwayat Pembelian</a>
+            <a href="user-chat.html" style="color:#64748b; font-weight:600; font-size:0.9rem; text-decoration:none; padding:12px 0; border-bottom:3px solid transparent;">💬 Contact to Admin <span class="badge-notif" style="background:#2563eb;">3</span></a>
+            <a href="user-notifications.html" style="color:#64748b; font-weight:600; font-size:0.9rem; text-decoration:none; padding:12px 0; border-bottom:3px solid transparent;">🔔 Notifikasi <span class="badge-notif">2</span></a>
+            <a href="profile.html" style="color:#64748b; font-weight:600; font-size:0.9rem; text-decoration:none; padding:12px 0; border-bottom:3px solid transparent;">Pengaturan Profil</a>
+        </div>
+    </div>
+</nav>
+
+<div class="page-wrap" style="max-width:1200px; width:100%; margin:0 auto; padding:24px 16px; flex:1; min-width:0; box-sizing:border-box;">
+
+    <!-- HEADER (Persis Screenshot 1) -->
+    <div class="flex-between mb-4" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+        <div>
+            <h1 style="margin:0 0 4px 0; font-size:clamp(1.3rem, 4vw, 1.8rem); font-weight:800; color:#4A0000;">Halo, <span data-auth-name>rain</span>! 👋</h1>
+            <p class="text-muted" style="margin:0; font-size:0.9rem;">Selamat datang di <strong>PustakaMart</strong> • Wednesday, 25 November 2026</p>
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <a href="user-catalog.html" class="btn btn-primary btn-sm">📚 Belanja Buku Sekarang</a>
+            <a href="cart.html" class="btn btn-outline btn-sm">🛒 Keranjang Belanja</a>
+        </div>
+    </div>
+
+    <!-- STATUS PESANAN ANDA (4 KOTAK WARNA) -->
+    <div class="panel" style="margin-bottom:20px; padding:18px;">
+        <div class="panel-header flex-between mb-3" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <h3 class="panel-title" style="margin:0; font-size:1.05rem;">📦 Status Pesanan Anda (4 Pesanan)</h3>
+            <a href="transactions.html" class="btn btn-outline btn-sm" style="font-size:0.75rem;">Lihat Semua</a>
+        </div>
+
+        <div class="status-grid-4">
+            <a href="transactions.html" style="background:#ffedd5; padding:14px 8px; border-radius:10px; text-decoration:none; display:block; border:1px solid #fed7aa;">
+                <div style="font-size:1.5rem; font-weight:800; color:#c2410c;">1</div>
+                <div style="font-size:0.72rem; font-weight:700; color:#ea580c; margin-top:4px;">Menunggu ACC</div>
+            </a>
+            <a href="transactions.html" style="background:#fef3c7; padding:14px 8px; border-radius:10px; text-decoration:none; display:block; border:1px solid #fde68a;">
+                <div style="font-size:1.5rem; font-weight:800; color:#92400e;">1</div>
+                <div style="font-size:0.72rem; font-weight:700; color:#b45309; margin-top:4px;">Dikemas</div>
+            </a>
+            <a href="transactions.html" style="background:#e0e7ff; padding:14px 8px; border-radius:10px; text-decoration:none; display:block; border:1px solid #c7d2fe;">
+                <div style="font-size:1.5rem; font-weight:800; color:#3730a3;">1</div>
+                <div style="font-size:0.72rem; font-weight:700; color:#4338ca; margin-top:4px;">Dikirim</div>
+            </a>
+            <a href="transactions.html" style="background:#dcfce7; padding:14px 8px; border-radius:10px; text-decoration:none; display:block; border:1px solid #bbf7d0;">
+                <div style="font-size:1.5rem; font-weight:800; color:#15803d;">1</div>
+                <div style="font-size:0.72rem; font-weight:700; color:#16a34a; margin-top:4px;">Selesai</div>
+            </a>
+        </div>
+    </div>
+
+    <!-- 2 KOLOM: PESANAN TERAKHIR & REKOMENDASI BUKU -->
+    <div class="dashboard-2col">
+        <!-- Kolom Kiri: Pesanan Terakhir -->
+        <div class="panel" style="margin:0;">
+            <div class="panel-header flex-between mb-3" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                <h3 class="panel-title" style="margin:0; font-size:1.05rem;">🧾 Pesanan Terakhir</h3>
+                <a href="transactions.html" style="font-size:0.8rem; color:var(--primary); font-weight:600; text-decoration:none; white-space:nowrap;">Selengkapnya &rarr;</a>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:12px;">
+                <div style="background:#f8fafc; border:1px solid var(--border); border-radius:8px; padding:12px; display:flex; justify-content:space-between; align-items:center; gap:8px;">
+                    <div style="min-width:0; flex:1;">
+                        <strong style="font-size:0.85rem; color:var(--text-main); font-family:monospace; display:block;">RP-20261124-66E394</strong>
+                        <div style="font-size:0.72rem; color:var(--text-muted); margin-top:2px;">24 Nov 2026, 07:32 • Transfer Mandiri</div>
+                        <div style="font-size:0.85rem; font-weight:800; color:var(--primary); margin-top:3px;">Rp 217.000</div>
+                    </div>
+                    <div style="display:flex; flex-direction:column; align-items:flex-end; gap:6px; flex-shrink:0;">
+                        <span class="status-badge" style="background:#ffedd5; color:#c2410c;">Waiting Confirmation</span>
+                        <a href="transaction-detail.html" class="btn btn-outline btn-sm" style="font-size:0.72rem; padding:3px 8px;">Detail &rarr;</a>
+                    </div>
+                </div>
+
+                <div style="background:#f8fafc; border:1px solid var(--border); border-radius:8px; padding:12px; display:flex; justify-content:space-between; align-items:center; gap:8px;">
+                    <div style="min-width:0; flex:1;">
+                        <strong style="font-size:0.85rem; color:var(--text-main); font-family:monospace; display:block;">RP-20261123-E505</strong>
+                        <div style="font-size:0.72rem; color:var(--text-muted); margin-top:2px;">23 Nov 2026, 07:32 • Transfer Mandiri</div>
+                        <div style="font-size:0.85rem; font-weight:800; color:var(--primary); margin-top:3px;">Rp 128.000</div>
+                    </div>
+                    <div style="display:flex; flex-direction:column; align-items:flex-end; gap:6px; flex-shrink:0;">
+                        <span class="status-badge" style="background:#fef3c7; color:#92400e;">Processing</span>
+                        <a href="transaction-detail.html" class="btn btn-outline btn-sm" style="font-size:0.72rem; padding:3px 8px;">Detail &rarr;</a>
+                    </div>
+                </div>
+
+                <div style="background:#f8fafc; border:1px solid var(--border); border-radius:8px; padding:12px; display:flex; justify-content:space-between; align-items:center; gap:8px;">
+                    <div style="min-width:0; flex:1;">
+                        <strong style="font-size:0.85rem; color:var(--text-main); font-family:monospace; display:block;">RP-20261122-D404</strong>
+                        <div style="font-size:0.72rem; color:var(--text-muted); margin-top:2px;">22 Nov 2026, 07:32 • Transfer BCA</div>
+                        <div style="font-size:0.85rem; font-weight:800; color:var(--primary); margin-top:3px;">Rp 155.000</div>
+                    </div>
+                    <div style="display:flex; flex-direction:column; align-items:flex-end; gap:6px; flex-shrink:0;">
+                        <span class="status-badge" style="background:#e0e7ff; color:#3730a3;">Shipped</span>
+                        <a href="transaction-detail.html" class="btn btn-outline btn-sm" style="font-size:0.72rem; padding:3px 8px;">Detail &rarr;</a>
+                    </div>
+                </div>
+
+                <div style="background:#f8fafc; border:1px solid var(--border); border-radius:8px; padding:12px; display:flex; justify-content:space-between; align-items:center; gap:8px;">
+                    <div style="min-width:0; flex:1;">
+                        <strong style="font-size:0.85rem; color:var(--text-main); font-family:monospace; display:block;">RP-20261119-A101</strong>
+                        <div style="font-size:0.72rem; color:var(--text-muted); margin-top:2px;">19 Nov 2026, 07:32 • Transfer BCA</div>
+                        <div style="font-size:0.85rem; font-weight:800; color:var(--primary); margin-top:3px;">Rp 217.000</div>
+                    </div>
+                    <div style="display:flex; flex-direction:column; align-items:flex-end; gap:6px; flex-shrink:0;">
+                        <span class="status-badge" style="background:#dcfce7; color:#15803d;">Completed</span>
+                        <a href="transaction-detail.html" class="btn btn-outline btn-sm" style="font-size:0.72rem; padding:3px 8px;">Detail &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Kolom Kanan: Rekomendasi Buku -->
+        <div class="panel" style="margin:0;">
+            <div class="panel-header flex-between mb-3" style="display:flex; justify-content:space-between; align-items:center;">
+                <h3 class="panel-title" style="margin:0; font-size:1.05rem;">✨ Rekomendasi Buku</h3>
+                <a href="user-catalog.html" style="font-size:0.85rem; color:var(--primary); font-weight:600; text-decoration:none;">Katalog &rarr;</a>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:12px;">
+                <div style="display:flex; align-items:center; gap:12px; padding:8px 0; border-bottom:1px solid #f1f5f9;">
+                    <img src="uploads/covers/anak-semua-bangsa.jpg" alt="Anak Semua Bangsa" style="width:44px; height:60px; object-fit:cover; border-radius:6px; border:1px solid var(--border); flex-shrink:0;">
+                    <div style="flex:1; min-width:0;">
+                        <strong style="font-size:0.9rem; color:var(--text-main); display:block;">Anak Semua Bangsa</strong>
+                        <div style="font-size:0.75rem; color:var(--text-muted);">Pramoedya Ananta Toer</div>
+                        <div style="font-size:0.85rem; font-weight:800; color:var(--primary); margin-top:2px;">Rp 195.000</div>
+                    </div>
+                    <a href="book-detail.html?book=anak-semua-bangsa" class="btn btn-outline btn-sm" style="font-size:0.78rem; padding:4px 12px;">Lihat</a>
+                </div>
+
+                <div style="display:flex; align-items:center; gap:12px; padding:8px 0; border-bottom:1px solid #f1f5f9;">
+                    <img src="uploads/covers/notasi.jpg" alt="Notasi" style="width:44px; height:60px; object-fit:cover; border-radius:6px; border:1px solid var(--border); flex-shrink:0;">
+                    <div style="flex:1; min-width:0;">
+                        <strong style="font-size:0.9rem; color:var(--text-main); display:block;">Notasi</strong>
+                        <div style="font-size:0.75rem; color:var(--text-muted);">Morra Quatro</div>
+                        <div style="font-size:0.85rem; font-weight:800; color:var(--primary); margin-top:2px;">Rp 98.000</div>
+                    </div>
+                    <a href="book-detail.html?book=notasi" class="btn btn-outline btn-sm" style="font-size:0.78rem; padding:4px 12px;">Lihat</a>
+                </div>
+
+                <div style="display:flex; align-items:center; gap:12px; padding:8px 0; border-bottom:1px solid #f1f5f9;">
+                    <img src="uploads/covers/sapiens.jpg" alt="Sapiens" style="width:44px; height:60px; object-fit:cover; border-radius:6px; border:1px solid var(--border); flex-shrink:0;">
+                    <div style="flex:1; min-width:0;">
+                        <strong style="font-size:0.9rem; color:var(--text-main); display:block;">Sapiens</strong>
+                        <div style="font-size:0.75rem; color:var(--text-muted);">Yuval Noah Harari</div>
+                        <div style="font-size:0.85rem; font-weight:800; color:var(--primary); margin-top:2px;">Rp 145.000</div>
+                    </div>
+                    <a href="book-detail.html?book=sapiens" class="btn btn-outline btn-sm" style="font-size:0.78rem; padding:4px 12px;">Lihat</a>
+                </div>
+
+                <div style="display:flex; align-items:center; gap:12px; padding:8px 0;">
+                    <img src="uploads/covers/mindset.jpg" alt="Mindset" style="width:44px; height:60px; object-fit:cover; border-radius:6px; border:1px solid var(--border); flex-shrink:0;">
+                    <div style="flex:1; min-width:0;">
+                        <strong style="font-size:0.9rem; color:var(--text-main); display:block;">Mindset</strong>
+                        <div style="font-size:0.75rem; color:var(--text-muted);">Carol S. Dweck</div>
+                        <div style="font-size:0.85rem; font-weight:800; color:var(--primary); margin-top:2px;">Rp 118.000</div>
+                    </div>
+                    <a href="book-detail.html?book=mindset" class="btn btn-outline btn-sm" style="font-size:0.78rem; padding:4px 12px;">Lihat</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<footer style="background:#0F172A; color:white; border-top:1px solid #1e293b; padding:24px 16px; text-align:center; font-size:0.85rem; margin-top:auto;">
+    <div style="max-width:1200px; margin:0 auto;">&copy; 2026 <strong>PustakaMart</strong>. Toko Buku Fisik Original &amp; Terpercaya.</div>
+</footer>
+</body>
+</html>

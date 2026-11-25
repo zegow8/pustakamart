@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toko Buku Online Modern - PustakaMart</title>
+    <link rel="icon" type="image/png" href="images/pustakamart.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        .hero-responsive-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 36px; align-items: center; }
+        .stats-bar-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; text-align: center; }
+        .books-responsive-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 18px; }
+        .steps-responsive-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; }
+        .features-responsive-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
+        .footer-responsive-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.4fr; gap: 32px; }
+        @media (max-width: 900px) {
+            .hero-responsive-grid { grid-template-columns: 1fr; gap: 24px; }
+            .stats-bar-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-responsive-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
+        }
+        @media (max-width: 600px) {
+            .hero-responsive { padding: 24px 18px !important; border-radius: 16px !important; }
+            .hero-responsive h1 { font-size: 1.85rem !important; }
+            .stats-bar-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .books-responsive-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .footer-responsive-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="container navbar-inner">
+        <a href="index.html" class="navbar-brand" style="display:inline-flex; align-items:center; gap:9px; text-decoration:none;">
+            <img src="images/pustakamart.png" alt="PustakaMart" style="height:34px; width:34px; object-fit:contain;">
+            <span style="font-size:1.4rem; font-weight:800; color:var(--primary); letter-spacing:-0.5px;">PUSTAKAMART</span>
+        </a>
+        <ul class="navbar-nav">
+            <li><a href="index.html" class="active">Beranda</a></li>
+            <li><a href="catalog.html">Katalog Buku</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Hubungi Kami</a></li>
+        </ul>
+        <div class="navbar-actions">
+            <div id="public-nav-actions" style="display:flex; gap:10px; align-items:center;">
+                <a href="login.html" class="btn btn-outline btn-sm">Login</a>
+                <a href="register.html" class="btn btn-primary btn-sm">Daftar</a>
+            </div>
+            <button class="navbar-hamburger" id="navbar-hamburger" aria-label="Menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+    <div class="navbar-mobile-menu" id="navbar-mobile-menu">
+        <a href="index.html">Beranda</a>
+        <a href="catalog.html">Katalog Buku</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Hubungi Kami</a>
+        <div id="mobile-auth-links" style="display:flex; flex-direction:column; gap:4px; margin-top:6px;">
+            <a href="login.html">Login</a>
+            <a href="register.html" style="color:var(--primary); font-weight:700;">Daftar Gratis</a>
+        </div>
+    </div>
+</nav>
+
+<main class="main-content">
+    <div class="container">
+
+        <!-- HERO SECTION -->
+        <section class="hero-responsive" style="background: linear-gradient(135deg, #FFF0F0 0%, #FFD4D4 100%); border: 1px solid #F7C5C5; border-radius: 24px; padding: 48px; margin-bottom: 32px; box-shadow: 0 10px 30px rgba(128,0,0,0.04);">
+            <div class="hero-responsive-grid">
+                <div>
+                    <div class="hero-eyebrow" style="background: white; color: #800000; border: 1px solid #F0B2B2; display:inline-flex; align-items:center; gap:6px; padding:6px 14px; border-radius:20px; font-size:0.8rem; font-weight:700;">
+                        📖 Toko Buku Fisik Original &amp; Terpercaya
+                    </div>
+                    <h1 style="color: #4A0000; font-size: 2.75rem; letter-spacing: -0.03em; line-height: 1.15; margin: 16px 0;">
+                        Temukan Buku Impianmu<br><span style="color: #800000;">Hanya di PustakaMart.</span>
+                    </h1>
+                    <p style="color: #634040; font-size: 1.05rem; line-height: 1.6; max-width: 540px; margin: 0 0 24px 0;">
+                        Dapatkan ribuan buku fisik original dari penulis dan penerbit terkemuka nusantara. Belanja mudah, aman, harga bersahabat, dikirim langsung ke depan pintu Anda.
+                    </p>
+                    <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 24px;">
+                        <a href="catalog.html" class="btn btn-primary btn-lg" style="background: #800000; border-color: #800000; font-weight: 700; padding: 12px 26px; border-radius: 12px;">
+                            Jelajahi Katalog Buku &rarr;
+                        </a>
+                        <a href="register.html" class="btn btn-outline btn-lg" style="color: #800000; border-color: #800000; background: white; font-weight: 700; padding: 12px 24px; border-radius: 12px;">
+                            Daftar Akun Baru
+                        </a>
+                    </div>
+                    <div style="display: flex; gap: 18px; flex-wrap: wrap; font-size: 0.85rem; font-weight: 600; color: #4A0000;">
+                        <span>✓ 100% Buku Fisik Original</span>
+                        <span>✓ Koleksi Lengkap &amp; Terkini</span>
+                        <span>✓ Ekspedisi Cepat &amp; Aman</span>
+                    </div>
+                </div>
+                <div>
+                    <img src="assets/images/perpusrain.jpg" alt="PustakaMart" style="width: 100%; border-radius: 20px; object-fit: cover; max-height: 360px; box-shadow: 0 10px 25px rgba(128,0,0,0.15); border: 2px solid #FFF;">
+                </div>
+            </div>
+        </section>
+
+        <!-- 4 STATS BAR -->
+        <section style="background:white; border:1px solid var(--border); border-radius:16px; padding:24px; margin-bottom:44px; box-shadow:0 2px 10px rgba(0,0,0,0.02);">
+            <div class="stats-bar-grid">
+                <div>
+                    <div style="font-size:1.85rem; font-weight:800; color:#800000;">11+</div>
+                    <div style="font-size:0.82rem; color:var(--text-muted); font-weight:600;">Koleksi Judul Buku</div>
+                </div>
+                <div>
+                    <div style="font-size:1.85rem; font-weight:800; color:#800000;">4+</div>
+                    <div style="font-size:0.82rem; color:var(--text-muted); font-weight:600;">Kategori Pilihan</div>
+                </div>
+                <div>
+                    <div style="font-size:1.85rem; font-weight:800; color:#800000;">4+</div>
+                    <div style="font-size:0.82rem; color:var(--text-muted); font-weight:600;">Anggota Terdaftar</div>
+                </div>
+                <div>
+                    <div style="font-size:1.85rem; font-weight:800; color:#800000;">100%</div>
+                    <div style="font-size:0.82rem; color:var(--text-muted); font-weight:600;">Jaminan Original</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- KOLEKSI BUKU TERBARU -->
+        <section style="margin-bottom: 48px;">
+            <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:20px; flex-wrap:wrap; gap:10px;">
+                <div>
+                    <span style="font-size:0.75rem; font-weight:800; color:#800000; text-transform:uppercase; letter-spacing:0.06em;">PILIHAN TERBAIK</span>
+                    <h2 style="font-size:1.65rem; font-weight:800; color:#1e293b; margin:4px 0 0;">Koleksi Buku Terbaru</h2>
+                </div>
+                <a href="catalog.html" style="color:#800000; font-weight:700; text-decoration:none; font-size:0.9rem;">Lihat Semua Katalog &rarr;</a>
+            </div>
+            <div class="books-responsive-grid">
+                <a href="book-detail.html?book=notasi" class="book-card" style="text-decoration:none; color:inherit;">
+                    <div class="book-cover"><img src="uploads/covers/notasi.jpg" alt="Notasi"></div>
+                    <div class="book-body">
+                        <span class="book-category">Fiksi &amp; Sastra</span>
+                        <h3 class="book-title">Notasi</h3>
+                        <div class="book-author">Morra Quatro</div>
+                        <div class="book-footer"><span class="book-price">Rp 98.000</span><span class="badge badge-success">Stok: 15</span></div>
+                    </div>
+                </a>
+                <a href="book-detail.html?book=bumi-manusia" class="book-card" style="text-decoration:none; color:inherit;">
+                    <div class="book-cover"><img src="uploads/covers/bumi-manusia.jpg" alt="Bumi Manusia"></div>
+                    <div class="book-body">
+                        <span class="book-category">Fiksi &amp; Sastra</span>
+                        <h3 class="book-title">Bumi Manusia</h3>
+                        <div class="book-author">Pramoedya Ananta Toer</div>
+                        <div class="book-footer"><span class="book-price">Rp 207.000</span><span class="badge badge-success">Stok: 24</span></div>
+                    </div>
+                </a>
+                <a href="book-detail.html?book=laut-bercerita" class="book-card" style="text-decoration:none; color:inherit;">
+                    <div class="book-cover"><img src="uploads/covers/laut-bercerita.jpg" alt="Laut Bercerita"></div>
+                    <div class="book-body">
+                        <span class="book-category">Fiksi &amp; Sastra</span>
+                        <h3 class="book-title">Laut Bercerita</h3>
+                        <div class="book-author">Leila S. Chudori</div>
+                        <div class="book-footer"><span class="book-price">Rp 115.000</span><span class="badge badge-success">Stok: 18</span></div>
+                    </div>
+                </a>
+                <a href="book-detail.html?book=filosofi-teras" class="book-card" style="text-decoration:none; color:inherit;">
+                    <div class="book-cover"><img src="uploads/covers/filosofi-teras.jpg" alt="Filosofi Teras"></div>
+                    <div class="book-body">
+                        <span class="book-category">Pengembangan Diri</span>
+                        <h3 class="book-title">Filosofi Teras</h3>
+                        <div class="book-author">Henry Manampiring</div>
+                        <div class="book-footer"><span class="book-price">Rp 98.000</span><span class="badge badge-success">Stok: 30</span></div>
+                    </div>
+                </a>
+                <a href="book-detail.html?book=mindset" class="book-card" style="text-decoration:none; color:inherit;">
+                    <div class="book-cover"><img src="uploads/covers/mindset.jpg" alt="Mindset"></div>
+                    <div class="book-body">
+                        <span class="book-category">Pengembangan Diri</span>
+                        <h3 class="book-title">Mindset</h3>
+                        <div class="book-author">Carol S. Dweck</div>
+                        <div class="book-footer"><span class="book-price">Rp 118.000</span><span class="badge badge-success">Stok: 22</span></div>
+                    </div>
+                </a>
+                <a href="book-detail.html?book=sapiens" class="book-card" style="text-decoration:none; color:inherit;">
+                    <div class="book-cover"><img src="uploads/covers/sapiens.jpg" alt="Sapiens"></div>
+                    <div class="book-body">
+                        <span class="book-category">Sejarah &amp; Sains</span>
+                        <h3 class="book-title">Sapiens</h3>
+                        <div class="book-author">Yuval Noah Harari</div>
+                        <div class="book-footer"><span class="book-price">Rp 145.000</span><span class="badge badge-success">Stok: 15</span></div>
+                    </div>
+                </a>
+                <a href="book-detail.html?book=cantik-itu-luka" class="book-card" style="text-decoration:none; color:inherit;">
+                    <div class="book-cover"><img src="uploads/covers/cantik-itu-luka.jpg" alt="Cantik Itu Luka"></div>
+                    <div class="book-body">
+                        <span class="book-category">Fiksi &amp; Sastra</span>
+                        <h3 class="book-title">Cantik Itu Luka</h3>
+                        <div class="book-author">Eka Kurniawan</div>
+                        <div class="book-footer"><span class="book-price">Rp 125.000</span><span class="badge badge-success">Stok: 12</span></div>
+                    </div>
+                </a>
+                <a href="book-detail.html?book=pulang" class="book-card" style="text-decoration:none; color:inherit;">
+                    <div class="book-cover" style="position:relative;">
+                        <img src="uploads/covers/pulang.jpg" alt="Pulang" style="opacity:0.75;">
+                        <span style="position:absolute; top:8px; right:8px; background:#ef4444; color:white; font-size:0.7rem; font-weight:700; padding:2px 8px; border-radius:4px;">Stok Habis</span>
+                    </div>
+                    <div class="book-body">
+                        <span class="book-category">Fiksi &amp; Sastra</span>
+                        <h3 class="book-title">Pulang</h3>
+                        <div class="book-author">Leila S. Chudori</div>
+                        <div class="book-footer"><span class="book-price">Rp 115.000</span><span class="badge badge-danger">Habis</span></div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- CARA BELANJA MUDAH (ALUR PEMBELIAN) -->
+        <section id="alur-pembelian" style="background:white; border:1px solid var(--border); border-radius:20px; padding:36px 28px; margin-bottom:44px;">
+            <div style="text-align:center; margin-bottom:28px;">
+                <span style="background:#FFF0F0; color:#800000; padding:4px 12px; border-radius:20px; font-size:0.75rem; font-weight:800;">ALUR PEMBELIAN</span>
+                <h2 style="font-size:1.65rem; font-weight:800; color:#1e293b; margin:8px 0 6px;">Cara Belanja Mudah di PustakaMart</h2>
+                <p style="color:var(--text-muted); font-size:0.9rem; margin:0;">Ikuti 5 langkah sederhana untuk memesan buku favorit Anda hingga sampai di rumah.</p>
+            </div>
+            <div class="steps-responsive-grid">
+                <div style="background:#FFF8F8; border:1px solid #FADBD8; border-radius:14px; padding:20px;">
+                    <div style="width:32px; height:32px; border-radius:50%; background:#800000; color:white; font-weight:800; display:flex; align-items:center; justify-content:center; margin-bottom:12px;">1</div>
+                    <h4 style="margin:0 0 6px; font-size:0.98rem; color:#1e293b;">Pilih Buku</h4>
+                    <p style="margin:0; font-size:0.82rem; color:#64748b; line-height:1.5;">Telusuri katalog kami dan temukan buku fisik impian Anda.</p>
+                </div>
+                <div style="background:#FFF8F8; border:1px solid #FADBD8; border-radius:14px; padding:20px;">
+                    <div style="width:32px; height:32px; border-radius:50%; background:#800000; color:white; font-weight:800; display:flex; align-items:center; justify-content:center; margin-bottom:12px;">2</div>
+                    <h4 style="margin:0 0 6px; font-size:0.98rem; color:#1e293b;">Masukkan Keranjang</h4>
+                    <p style="margin:0; font-size:0.82rem; color:#64748b; line-height:1.5;">Tambahkan buku pilihan ke keranjang dan atur jumlahnya.</p>
+                </div>
+                <div style="background:#FFF8F8; border:1px solid #FADBD8; border-radius:14px; padding:20px;">
+                    <div style="width:32px; height:32px; border-radius:50%; background:#800000; color:white; font-weight:800; display:flex; align-items:center; justify-content:center; margin-bottom:12px;">3</div>
+                    <h4 style="margin:0 0 6px; font-size:0.98rem; color:#1e293b;">Transfer &amp; Upload Bukti</h4>
+                    <p style="margin:0; font-size:0.82rem; color:#64748b; line-height:1.5;">Bayar via BCA / Mandiri dan unggah bukti transfer saat checkout.</p>
+                </div>
+                <div style="background:#FFF8F8; border:1px solid #FADBD8; border-radius:14px; padding:20px;">
+                    <div style="width:32px; height:32px; border-radius:50%; background:#800000; color:white; font-weight:800; display:flex; align-items:center; justify-content:center; margin-bottom:12px;">4</div>
+                    <h4 style="margin:0 0 6px; font-size:0.98rem; color:#1e293b;">Verifikasi &amp; Packing</h4>
+                    <p style="margin:0; font-size:0.82rem; color:#64748b; line-height:1.5;">Admin memverifikasi pembayaran dan mengemas buku rapi.</p>
+                </div>
+                <div style="background:#FFF8F8; border:1px solid #FADBD8; border-radius:14px; padding:20px;">
+                    <div style="width:32px; height:32px; border-radius:50%; background:#800000; color:white; font-weight:800; display:flex; align-items:center; justify-content:center; margin-bottom:12px;">5</div>
+                    <h4 style="margin:0 0 6px; font-size:0.98rem; color:#1e293b;">Pengiriman &amp; Resi</h4>
+                    <p style="margin:0; font-size:0.82rem; color:#64748b; line-height:1.5;">Buku dikirim ke alamat Anda lengkap dengan nomor resi resmi.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- KENAPA BELANJA DI PUSTAKAMART -->
+        <section style="margin-bottom:44px;">
+            <div style="text-align:center; margin-bottom:24px;">
+                <span style="background:#FFF0F0; color:#800000; padding:4px 12px; border-radius:20px; font-size:0.75rem; font-weight:800;">KEUNGGULAN KAMI</span>
+                <h2 style="font-size:1.65rem; font-weight:800; color:#1e293b; margin:8px 0 6px;">Kenapa Belanja di PustakaMart?</h2>
+                <p style="color:var(--text-muted); font-size:0.9rem; margin:0;">Kami berkomitmen memberikan pengalaman belanja buku terbaik bagi pembaca di Indonesia.</p>
+            </div>
+            <div class="features-responsive-grid">
+                <div class="panel" style="margin:0; padding:22px;"><h4 style="margin:0 0 6px;">📚 Koleksi Buku Lengkap</h4><p style="margin:0; font-size:0.85rem; color:var(--text-muted); line-height:1.5;">Menyediakan berbagai genre pilihan mulai dari fiksi, sastra, sains, hingga pengembangan diri.</p></div>
+                <div class="panel" style="margin:0; padding:22px;"><h4 style="margin:0 0 6px;">✅ Jaminan 100% Original</h4><p style="margin:0; font-size:0.85rem; color:var(--text-muted); line-height:1.5;">Seluruh buku bersegel resmi langsung dari penerbit terpercaya tanpa barang bajakan.</p></div>
+                <div class="panel" style="margin:0; padding:22px;"><h4 style="margin:0 0 6px;">⚡ Stok Akurat Real-Time</h4><p style="margin:0; font-size:0.85rem; color:var(--text-muted); line-height:1.5;">Stok terintegrasi otomatis saat transaksi sehingga aman dari bentrok pesanan.</p></div>
+                <div class="panel" style="margin:0; padding:22px;"><h4 style="margin:0 0 6px;">💬 LiveChat Customer Service</h4><p style="margin:0; font-size:0.85rem; color:var(--text-muted); line-height:1.5;">Konsultasi cepat langsung ke Admin melalui fitur LiveChat di Dashboard User.</p></div>
+                <div class="panel" style="margin:0; padding:22px;"><h4 style="margin:0 0 6px;">📦 Packing Pengaman Ekstra</h4><p style="margin:0; font-size:0.85rem; color:var(--text-muted); line-height:1.5;">Setiap pesanan buku dilapisi bubble wrap tebal agar tiba mulus tanpa penyok.</p></div>
+                <div class="panel" style="margin:0; padding:22px;"><h4 style="margin:0 0 6px;">🔔 Notifikasi Status Pesanan</h4><p style="margin:0; font-size:0.85rem; color:var(--text-muted); line-height:1.5;">Pantau setiap tahap pesanan dan nomor resi langsung melalui notifikasi akun Anda.</p></div>
+            </div>
+        </section>
+
+        <!-- FAQ SECTION -->
+        <section id="faq" style="background:white; border:1px solid var(--border); border-radius:20px; padding:36px 28px; margin-bottom:24px;">
+            <div style="text-align:center; margin-bottom:24px;">
+                <span style="background:#FFF0F0; color:#800000; padding:4px 12px; border-radius:20px; font-size:0.75rem; font-weight:800;">PUSAT BANTUAN</span>
+                <h2 style="font-size:1.65rem; font-weight:800; color:#1e293b; margin:8px 0 6px;">Pertanyaan yang Sering Diajukan</h2>
+                <p style="color:var(--text-muted); font-size:0.9rem; margin:0;">Temukan jawaban cepat seputar pemesanan, pembayaran, dan pengiriman buku.</p>
+            </div>
+            <div style="max-width:780px; margin:0 auto; display:flex; flex-direction:column; gap:12px;">
+                <div class="faq-item" onclick="this.classList.toggle('active')" style="border:1px solid var(--border); border-radius:12px; padding:16px 20px; cursor:pointer; background:#fafafa;">
+                    <div style="display:flex; justify-content:space-between; font-weight:700; font-size:0.95rem;"><span>Bagaimana cara memesan buku di PustakaMart?</span><span>&darr;</span></div>
+                    <div class="faq-answer" style="font-size:0.86rem; color:var(--text-muted); margin-top:10px; line-height:1.6;">Login atau daftar akun terlebih dahulu, pilih buku di Katalog, masukkan ke Keranjang, lalu lakukan Checkout dengan memilih metode transfer dan mengunggah bukti pembayaran.</div>
+                </div>
+                <div class="faq-item" onclick="this.classList.toggle('active')" style="border:1px solid var(--border); border-radius:12px; padding:16px 20px; cursor:pointer; background:#fafafa;">
+                    <div style="display:flex; justify-content:space-between; font-weight:700; font-size:0.95rem;"><span>Apakah buku yang dijual dijamin 100% original?</span><span>&darr;</span></div>
+                    <div class="faq-answer" style="font-size:0.86rem; color:var(--text-muted); margin-top:10px; line-height:1.6;">Ya, seluruh koleksi buku di PustakaMart adalah 100% buku fisik asli ber-ISBN resmi dari penerbit terkemuka.</div>
+                </div>
+                <div class="faq-item" onclick="this.classList.toggle('active')" style="border:1px solid var(--border); border-radius:12px; padding:16px 20px; cursor:pointer; background:#fafafa;">
+                    <div style="display:flex; justify-content:space-between; font-weight:700; font-size:0.95rem;"><span>Apa metode pembayaran yang didukung?</span><span>&darr;</span></div>
+                    <div class="faq-answer" style="font-size:0.86rem; color:var(--text-muted); margin-top:10px; line-height:1.6;">Saat ini mendukung Transfer Bank BCA dan Transfer Bank Mandiri dengan verifikasi bukti pembayaran langsung oleh Admin.</div>
+                </div>
+                <div class="faq-item" onclick="this.classList.toggle('active')" style="border:1px solid var(--border); border-radius:12px; padding:16px 20px; cursor:pointer; background:#fafafa;">
+                    <div style="display:flex; justify-content:space-between; font-weight:700; font-size:0.95rem;"><span>Bagaimana cara melacak pengiriman paket saya?</span><span>&darr;</span></div>
+                    <div class="faq-answer" style="font-size:0.86rem; color:var(--text-muted); margin-top:10px; line-height:1.6;">Setelah admin mengirim paket, nomor resi ekspedisi otomatis muncul di halaman Detail Transaksi dan notifikasi akun Anda.</div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</main>
+
+<!-- FOOTER -->
+<footer style="background:#0F172A; color:white; border-top:1px solid #1e293b; padding:44px 0 24px; margin-top:auto;">
+    <div class="container">
+        <div class="footer-responsive-grid">
+            <div>
+                <div style="font-weight:800; font-size:1.2rem; color:white; margin-bottom:12px; display:flex; align-items:center; gap:9px;">
+                    <img src="images/pustakamart.png" alt="PustakaMart" style="height:32px; width:32px; object-fit:contain; background:white; border-radius:6px; padding:2px;">
+                    <span>PUSTAKAMART</span>
+                </div>
+                <p style="font-size:0.85rem; color:rgba(255,255,255,0.65); line-height:1.6; margin:0 0 14px;">
+                    Toko Buku Online Modern &amp; Terpercaya. Menghadirkan ribuan koleksi buku fisik original berkualitas dengan harga terbaik dan pengiriman cepat ke seluruh Indonesia.
+                </p>
+                <div style="display:flex; gap:8px; flex-wrap:wrap; font-size:0.75rem; font-weight:700;">
+                    <span style="background:rgba(255,255,255,0.08); padding:4px 10px; border-radius:6px; color:#93c5fd;">📚 100% Original</span>
+                    <span style="background:rgba(255,255,255,0.08); padding:4px 10px; border-radius:6px; color:#fde047;">✨ Koleksi Lengkap</span>
+                    <span style="background:rgba(255,255,255,0.08); padding:4px 10px; border-radius:6px; color:#86efac;">⚡ Pengiriman Cepat</span>
+                </div>
+            </div>
+            <div>
+                <h4 style="color:white; font-size:0.95rem; font-weight:700; margin:0 0 14px; text-transform:uppercase; letter-spacing:0.05em;">Navigasi</h4>
+                <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px; font-size:0.875rem;">
+                    <li><a href="index.html" style="color:rgba(255,255,255,0.75); text-decoration:none;">Beranda</a></li>
+                    <li><a href="catalog.html" style="color:rgba(255,255,255,0.75); text-decoration:none;">Katalog Buku Lengkap</a></li>
+                    <li><a href="#alur-pembelian" style="color:rgba(255,255,255,0.75); text-decoration:none;">Alur Pembelian</a></li>
+                    <li><a href="#faq" style="color:rgba(255,255,255,0.75); text-decoration:none;">FAQ &amp; Bantuan</a></li>
+                    <li><a href="about.html" style="color:rgba(255,255,255,0.75); text-decoration:none;">About Us (Tentang Kami)</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="color:white; font-size:0.95rem; font-weight:700; margin:0 0 14px; text-transform:uppercase; letter-spacing:0.05em;">Layanan &amp; Akun</h4>
+                <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px; font-size:0.875rem;">
+                    <li><a href="login.html" style="color:rgba(255,255,255,0.75); text-decoration:none;">Masuk ke Akun</a></li>
+                    <li><a href="register.html" style="color:rgba(255,255,255,0.75); text-decoration:none;">Daftar Akun Baru (Gratis)</a></li>
+                    <li><a href="contact.html" style="color:rgba(255,255,255,0.75); text-decoration:none;">Hubungi Kami</a></li>
+                </ul>
+            </div>
+            <div style="background:rgba(255,255,255,0.04); padding:18px; border-radius:12px; border:1px solid rgba(255,255,255,0.08);">
+                <h4 style="color:#60a5fa; font-size:0.95rem; font-weight:700; margin:0 0 10px;">💬 Hubungi Developer</h4>
+                <p style="font-size:0.8rem; color:rgba(255,255,255,0.72); margin:0 0 12px; line-height:1.5;">Ada pertanyaan seputar sistem atau saran perbaikan? Hubungi langsung:</p>
+                <div style="display:flex; flex-direction:column; gap:8px; font-size:0.83rem;">
+                    <span style="color:rgba(255,255,255,0.85);">📱 WhatsApp: <strong style="color:white;">081547184307</strong></span>
+                    <span style="color:rgba(255,255,255,0.85);">📸 Instagram: <strong style="color:white;">@eddlyaa__</strong></span>
+                    <span style="color:rgba(255,255,255,0.85);">💻 GitHub: <strong style="color:white;">@zegow8</strong></span>
+                </div>
+                <div style="margin-top:12px; padding-top:10px; border-top:1px solid rgba(255,255,255,0.08); font-size:0.75rem; color:rgba(255,255,255,0.6);">
+                    🕒 Operasional: Senin – Sabtu (08.00 – 20.00 WIB)
+                </div>
+            </div>
+        </div>
+        <div style="margin-top:32px; padding-top:18px; border-top:1px solid rgba(255,255,255,0.1); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; font-size:0.82rem; color:rgba(255,255,255,0.6);">
+            <span>&copy; 2026 <strong>PustakaMart</strong>. All rights reserved.</span>
+            <span>Dibangun dengan Laravel 12 &amp; MySQL. Developer: <strong>@eddlyaa__ / @zegow8</strong></span>
+        </div>
+    </div>
+</footer>
+
+<script src="assets/js/script.js"></script>
+</body>
+</html>

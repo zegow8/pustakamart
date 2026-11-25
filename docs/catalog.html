@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Katalog Buku - PustakaMart</title>
+    <link rel="icon" type="image/png" href="images/pustakamart.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+        html, body { width: 100%; max-width: 100vw; overflow-x: hidden; margin: 0; padding: 0; background-color: var(--bg-main); font-family: 'Inter', sans-serif; }
+        body { display: flex; flex-direction: column; min-height: 100vh; }
+        .nav-link-custom { text-decoration: none; font-weight: 600; font-size: 0.95rem; color: #475569; padding-bottom: 6px; border-bottom: 3px solid transparent; transition: all 0.2s; }
+        .nav-link-custom:hover { color: #800000; }
+        .nav-link-custom.active { color: #800000; border-bottom-color: #800000; }
+    @media (max-width: 768px) {
+    .catalog-filter-grid { grid-template-columns: 1fr !important; }
+    #booksGrid { grid-template-columns: repeat(2, 1fr) !important; gap: 12px !important; }
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="container navbar-inner">
+        <a href="index.html" class="navbar-brand" style="display:inline-flex; align-items:center; gap:9px; text-decoration:none;">
+            <img src="images/pustakamart.png" alt="PustakaMart" style="height:34px; width:34px; object-fit:contain;">
+            <span style="font-size:1.4rem; font-weight:800; color:var(--primary); letter-spacing:-0.5px;">PUSTAKAMART</span>
+        </a>
+        <ul class="navbar-nav">
+            <li><a href="index.html">Beranda</a></li>
+            <li><a href="catalog.html" class="active">Katalog Buku</a></li>
+            <li><a href="about.html" class="">About Us</a></li>
+            <li><a href="contact.html" class="">Hubungi Kami</a></li>
+        </ul>
+        <div class="navbar-actions">
+            <div id="public-nav-actions" style="display:flex; gap:10px; align-items:center;">
+                <a href="login.html" class="btn btn-outline btn-sm">Login</a>
+                <a href="register.html" class="btn btn-primary btn-sm">Daftar</a>
+            </div>
+            <button class="navbar-hamburger" id="navbar-hamburger" aria-label="Menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+    <div class="navbar-mobile-menu" id="navbar-mobile-menu">
+        <a href="index.html">Beranda</a>
+        <a href="catalog.html">Katalog Buku</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Hubungi Kami</a>
+        <div id="mobile-auth-links" style="display:flex; flex-direction:column; gap:4px; margin-top:6px;">
+            <a href="login.html">Login</a>
+            <a href="register.html" style="color:var(--primary); font-weight:700;">Daftar Gratis</a>
+        </div>
+    </div>
+</nav>
+
+<main class="main-content">
+    <div class="container" style="max-width:1200px; margin:0 auto; padding:24px 16px;">
+        
+    <div style="margin-bottom: 24px;">
+        <h1 style="font-size: 2rem; font-weight: 800; color: #4A0000; margin: 0 0 6px;">Katalog Buku</h1>
+        <p style="color: #64748b; font-size: 0.95rem; margin: 0;">Jelajahi koleksi buku terbaik kami dan belanja dengan mudah.</p>
+    </div>
+
+    <!-- FILTER BAR -->
+    <div style="background: white; border: 1px solid #fee2e2; border-radius: 14px; padding: 18px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); margin-bottom: 24px;">
+        <div class="catalog-filter-grid" style="display: grid; grid-template-columns: 2fr 1.2fr 1fr auto; gap: 14px; align-items: flex-end;">
+            <div>
+                <label style="display: block; font-size: 0.8rem; font-weight: 700; color: #475569; margin-bottom: 6px;">Cari Buku</label>
+                <input type="text" id="searchInput" placeholder="Judul, penulis, ISBN..." style="width: 100%; padding: 9px 14px; border: 1.5px solid #e2e8f0; border-radius: 8px; font-size: 0.9rem;">
+            </div>
+            <div>
+                <label style="display: block; font-size: 0.8rem; font-weight: 700; color: #475569; margin-bottom: 6px;">Kategori</label>
+                <select id="catSelect" style="width: 100%; padding: 9px 14px; border: 1.5px solid #e2e8f0; border-radius: 8px; font-size: 0.9rem;">
+                    <option value="all">Semua Kategori</option>
+                    <option value="Fiksi">Fiksi (3)</option>
+                    <option value="Non Fiksi">Non Fiksi (3)</option>
+                    <option value="Pengembangan Diri">Pengembangan Diri (3)</option>
+                    <option value="Sastra & Klasik">Sastra &amp; Klasik (2)</option>
+                </select>
+            </div>
+            <div>
+                <label style="display: block; font-size: 0.8rem; font-weight: 700; color: #475569; margin-bottom: 6px;">Urutkan</label>
+                <select id="sortSelect" style="width: 100%; padding: 9px 14px; border: 1.5px solid #e2e8f0; border-radius: 8px; font-size: 0.9rem;">
+                    <option value="latest">Terbaru</option>
+                    <option value="az">Judul A-Z</option>
+                    <option value="price_low">Harga Terendah</option>
+                    <option value="price_high">Harga Tertinggi</option>
+                    <option value="out_of_stock">Stok Habis</option>
+                </select>
+            </div>
+            <div style="display:flex; gap:8px;">
+                <button type="button" id="btnFilter" style="background:#800000; color:white; border:none; padding:10px 18px; border-radius:8px; font-weight:700; font-size:0.88rem; cursor:pointer;">Cari</button>
+                <button type="button" id="btnReset" style="background:white; color:#475569; border:1.5px solid #cbd5e1; padding:10px 16px; border-radius:8px; font-weight:700; font-size:0.88rem; cursor:pointer;">Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- COUNT BAR -->
+    <div style="font-size: 0.9rem; color: #64748b; margin-bottom: 16px;" id="countBar">
+        Menampilkan <strong id="shownCount" style="color:#1e293b;">11</strong> dari <strong>11</strong> buku (Halaman 1)
+    </div>
+
+    <!-- BOOKS GRID -->
+    <div id="booksGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 20px;">
+    
+        <div class="book-card" data-title="notasi" data-author="morra quatro" data-cat="Fiksi" data-price="98000" data-stock="15" onclick="window.location.href='book-detail.html?book=notasi'" style="cursor:pointer; background:white; border:1px solid #fee2e2; border-radius:14px; padding:14px; box-shadow:0 2px 8px rgba(0,0,0,0.03); display:flex; flex-direction:column;">
+            <div style="position:relative; width:100%; aspect-ratio:3/4; overflow:hidden; border-radius:8px; margin-bottom:12px;">
+                <img src="uploads/covers/notasi.jpg" alt="Notasi" style="width:100%; height:100%; object-fit:cover;">
+                
+            </div>
+            <span style="font-size:0.75rem; color:#800000; background:#FFF0F0; padding:2px 8px; border-radius:6px; font-weight:700; align-self:flex-start; margin-bottom:6px;">Fiksi</span>
+            <h4 style="font-size:0.95rem; font-weight:700; color:#1e293b; margin:0 0 4px; line-height:1.3;">Notasi</h4>
+            <p style="font-size:0.8rem; color:#64748b; margin:0 0 10px;">Morra Quatro</p>
+            <div style="margin-top:auto; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-weight:800; color:#800000; font-size:1.05rem;">Rp 98,000</span>
+                <div style="display:flex; gap:6px;">
+                    <a href="book-detail.html" class="btn btn-outline btn-sm" style="border:1.5px solid #800000; color:#800000; padding:5px 10px; border-radius:6px; font-size:0.8rem; text-decoration:none; font-weight:600;">🔍 Detail</a>
+                    
+                </div>
+            </div>
+        </div>
+        
+        <div class="book-card" data-title="rumah kaca" data-author="pramoedya ananta toer" data-cat="Sastra & Klasik" data-price="215000" data-stock="0" onclick="window.location.href='book-detail.html?book=rumah-kaca'" style="cursor:pointer; background:white; border:1px solid #fee2e2; border-radius:14px; padding:14px; box-shadow:0 2px 8px rgba(0,0,0,0.03); display:flex; flex-direction:column;">
+            <div style="position:relative; width:100%; aspect-ratio:3/4; overflow:hidden; border-radius:8px; margin-bottom:12px;">
+                <img src="uploads/covers/rumah-kaca.jpg" alt="Rumah Kaca" style="width:100%; height:100%; object-fit:cover;">
+                <span style="position:absolute; top:8px; right:8px; background:#ef4444; color:white; font-size:0.7rem; font-weight:800; padding:3px 8px; border-radius:6px;">Stok Habis</span>
+            </div>
+            <span style="font-size:0.75rem; color:#800000; background:#FFF0F0; padding:2px 8px; border-radius:6px; font-weight:700; align-self:flex-start; margin-bottom:6px;">Sastra & Klasik</span>
+            <h4 style="font-size:0.95rem; font-weight:700; color:#1e293b; margin:0 0 4px; line-height:1.3;">Rumah Kaca</h4>
+            <p style="font-size:0.8rem; color:#64748b; margin:0 0 10px;">Pramoedya Ananta Toer</p>
+            <div style="margin-top:auto; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-weight:800; color:#800000; font-size:1.05rem;">Rp 215,000</span>
+                <div style="display:flex; gap:6px;">
+                    <a href="book-detail-out-of-stock.html" class="btn btn-outline btn-sm" style="border:1.5px solid #800000; color:#800000; padding:5px 10px; border-radius:6px; font-size:0.8rem; text-decoration:none; font-weight:600;">🔍 Detail</a>
+                    <a href="book-detail-out-of-stock.html" class="btn btn-outline btn-sm" style="border:1px solid #ef4444; color:#ef4444; padding:5px 12px; border-radius:6px; font-size:0.8rem; text-decoration:none; font-weight:700;">Habis</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="book-card" data-title="how to win friends and influence people" data-author="dale carnegie" data-cat="Pengembangan Diri" data-price="89000" data-stock="20" onclick="window.location.href='book-detail.html?book=how-to-win-friends'" style="cursor:pointer; background:white; border:1px solid #fee2e2; border-radius:14px; padding:14px; box-shadow:0 2px 8px rgba(0,0,0,0.03); display:flex; flex-direction:column;">
+            <div style="position:relative; width:100%; aspect-ratio:3/4; overflow:hidden; border-radius:8px; margin-bottom:12px;">
+                <img src="uploads/covers/how-to-win-friends.jpg" alt="How to Win Friends and Influence People" style="width:100%; height:100%; object-fit:cover;">
+                
+            </div>
+            <span style="font-size:0.75rem; color:#800000; background:#FFF0F0; padding:2px 8px; border-radius:6px; font-weight:700; align-self:flex-start; margin-bottom:6px;">Pengembangan Diri</span>
+            <h4 style="font-size:0.95rem; font-weight:700; color:#1e293b; margin:0 0 4px; line-height:1.3;">How to Win Friends and Influence People</h4>
+            <p style="font-size:0.8rem; color:#64748b; margin:0 0 10px;">Dale Carnegie</p>
+            <div style="margin-top:auto; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-weight:800; color:#800000; font-size:1.05rem;">Rp 89,000</span>
+                <div style="display:flex; gap:6px;">
+                    <a href="book-detail.html" class="btn btn-outline btn-sm" style="border:1.5px solid #800000; color:#800000; padding:5px 10px; border-radius:6px; font-size:0.8rem; text-decoration:none; font-weight:600;">🔍 Detail</a>
+                    
+                </div>
+            </div>
+        </div>
+        
+        <div class="book-card" data-title="mindset" data-author="carol s. dweck" data-cat="Pengembangan Diri" data-price="105000" data-stock="12" onclick="window.location.href='book-detail.html?book=mindset'" style="cursor:pointer; background:white; border:1px solid #fee2e2; border-radius:14px; padding:14px; box-shadow:0 2px 8px rgba(0,0,0,0.03); display:flex; flex-direction:column;">
+            <div style="position:relative; width:100%; aspect-ratio:3/4; overflow:hidden; border-radius:8px; margin-bottom:12px;">
+                <img src="uploads/covers/mindset.jpg" alt="Mindset" style="width:100%; height:100%; object-fit:cover;">
+                
+            </div>
+            <span style="font-size:0.75rem; color:#800000; background:#FFF0F0; padding:2px 8px; border-radius:6px; font-weight:700; align-self:flex-start; margin-bottom:6px;">Pengembangan Diri</span>
+            <h4 style="font-size:0.95rem; font-weight:700; color:#1e293b; margin:0 0 4px; line-height:1.3;">Mindset</h4>
+            <p style="font-size:0.8rem; color:#64748b; margin:0 0 10px;">Carol S. Dweck</p>
+            <div style="margin-top:auto; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-weight:800; color:#800000; font-size:1.05rem;">Rp 105,000</span>
+                <div style="display:flex; gap:6px;">
+                    <a href="book-detail.html" class="btn btn-outline btn-sm" style="border:1.5px solid #800000; color:#800000; padding:5px 10px; border-radius:6px; font-size:0.8rem; text-decoration:none; font-weight:600;">🔍 Detail</a>
+                    
+                </div>
+            </div>
+        </div>
+        
+        <div class="book-card" data-title="sapiens: riwayat singkat umat manusia" data-author="yuval noah harari" data-cat="Non Fiksi" data-price="135000" data-stock="18" style="background:white; border:1px solid #fee2e2; border-radius:14px; padding:14px; box-shadow:0 2px 8px rgba(0,0,0,0.03); display:flex; flex-direction:column;">
+            <div style="position:relative; width:100%; aspect-ratio:3/4; overflow:hidden; border-radius:8px; margin-bottom:12px;">
+                <img src="uploads/covers/sapiens.jpg" alt="Sapiens: Riwayat Singkat Umat Manusia" style="width:100%; height:100%; object-fit:cover;">
+                
+            </div>
+            <span style="font-size:0.75rem; color:#800000; background:#FFF0F0; padding:2px 8px; border-radius:6px; font-weight:700; align-self:flex-start; margin-bottom:6px;">Non Fiksi</span>
+            <h4 style="font-size:0.95rem; font-weight:700; color:#1e293b; margin:0 0 4px; line-height:1.3;">Sapiens: Riwayat Singkat Umat Manusia</h4>
+            <p style="font-size:0.8rem; color:#64748b; margin:0 0 10px;">Yuval Noah Harari</p>
+            <div style="margin-top:auto; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-weight:800; color:#800000; font-size:1.05rem;">Rp 135,000</span>
+                <div style="display:flex; gap:6px;">
+                    <a href="book-detail.html" class="btn btn-outline btn-sm" style="border:1.5px solid #800000; color:#800000; padding:5px 10px; border-radius:6px; font-size:0.8rem; text-decoration:none; font-weight:600;">🔍 Detail</a>
+                    
+                </div>
+            </div>
+        </div>
+        
+        <div class="book-card" data-title="laut bercerita" data-author="leila s. chudori" data-cat="Fiksi" data-price="109000" data-stock="25" onclick="window.location.href='book-detail.html?book=laut-bercerita'" style="cursor:pointer; background:white; border:1px solid #fee2e2; border-radius:14px; padding:14px; box-shadow:0 2px 8px rgba(0,0,0,0.03); display:flex; flex-direction:column;">
+            <div style="position:relative; width:100%; aspect-ratio:3/4; overflow:hidden; border-radius:8px; margin-bottom:12px;">
+                <img src="uploads/covers/laut-bercerita.jpg" alt="Laut Bercerita" style="width:100%; height:100%; object-fit:cover;">
+                
+            </div>
+            <span style="font-size:0.75rem; color:#800000; background:#FFF0F0; padding:2px 8px; border-radius:6px; font-weight:700; align-self:flex-start; margin-bottom:6px;">Fiksi</span>
+            <h4 style="font-size:0.95rem; font-weight:700; color:#1e293b; margin:0 0 4px; line-height:1.3;">Laut Bercerita</h4>
+            <p style="font-size:0.8rem; color:#64748b; margin:0 0 10px;">Leila S. Chudori</p>
+            <div style="margin-top:auto; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-weight:800; color:#800000; font-size:1.05rem;">Rp 109,000</span>
+                <div style="display:flex; gap:6px;">
+                    <a href="book-detail.html" class="btn btn-outline btn-sm" style="border:1.5px solid #800000; color:#800000; padding:5px 10px; border-radius:6px; font-size:0.8rem; text-decoration:none; font-weight:600;">🔍 Detail</a>
+                    
+                </div>
+            </div>
+        </div>
+        
+        <div class="book-card" data-title="cantik itu luka" data-author="eka kurniawan" data-cat="Fiksi" data-price="125000" data-stock="8" onclick="window.location.href='book-detail.html?book=cantik-itu-luka'" style="cursor:pointer; background:white; border:1px solid #fee2e2; border-radius:14px; padding:14px; box-shadow:0 2px 8px rgba(0,0,0,0.03); display:flex; flex-direction:column;">
+            <div style="position:relative; width:100%; aspect-ratio:3/4; overflow:hidden; border-radius:8px; margin-bottom:12px;">
+                <img src="uploads/covers/cantik-itu-luka.jpg" alt="Cantik Itu Luka" style="width:100%; height:100%; object-fit:cover;">
+                
+            </div>
+            <span style="font-size:0.75rem; color:#800000; background:#FFF0F0; padding:2px 8px; border-radius:6px; font-weight:700; align-self:flex-start; margin-bottom:6px;">Fiksi</span>
+            <h4 style="font-size:0.95rem; font-weight:700; color:#1e293b; margin:0 0 4px; line-height:1.3;">Cantik Itu Luka</h4>
+            <p style="font-size:0.8rem; color:#64748b; margin:0 0 10px;">Eka Kurniawan</p>
+            <div style="margin-top:auto; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-weight:800; color:#800000; font-size:1.05rem;">Rp 125,000</span>
+                <div style="display:flex; gap:6px;">
+                    <a href="book-detail.html" class="btn btn-outline btn-sm" style="border:1.5px solid #800000; color:#800000; padding:5px 10px; border-radius:6px; font-size:0.8rem; text-decoration:none; font-weight:600;">🔍 Detail</a>
+                    
+                </div>
+            </div>
+        </div>
+        
+        <div class="book-card" data-title="filosofi teras" data-author="henry manampiring" data-cat="Pengembangan Diri" data-price="98000" data-stock="30" onclick="window.location.href='book-detail.html?book=filosofi-teras'" style="cursor:pointer; background:white; border:1px solid #fee2e2; border-radius:14px; padding:14px; box-shadow:0 2px 8px rgba(0,0,0,0.03); display:flex; flex-direction:column;">
+            <div style="position:relative; width:100%; aspect-ratio:3/4; overflow:hidden; border-radius:8px; margin-bottom:12px;">
+                <img src="uploads/covers/filosofi-teras.jpg" alt="Filosofi Teras" style="width:100%; height:100%; object-fit:cover;">
+                
+            </div>
+            <span style="font-size:0.75rem; color:#800000; background:#FFF0F0; padding:2px 8px; border-radius:6px; font-weight:700; align-self:flex-start; margin-bottom:6px;">Pengembangan Diri</span>
+            <h4 style="font-size:0.95rem; font-weight:700; color:#1e293b; margin:0 0 4px; line-height:1.3;">Filosofi Teras</h4>
+            <p style="font-size:0.8rem; color:#64748b; margin:0 0 10px;">Henry Manampiring</p>
+            <div style="margin-top:auto; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-weight:800; color:#800000; font-size:1.05rem;">Rp 98,000</span>
+                <div style="display:flex; gap:6px;">
+                    <a href="book-detail.html" class="btn btn-outline btn-sm" style="border:1.5px solid #800000; color:#800000; padding:5px 10px; border-radius:6px; font-size:0.8rem; text-decoration:none; font-weight:600;">🔍 Detail</a>
+                    
+                </div>
+            </div>
+        </div>
+        
+        <div class="book-card" data-title="bumi manusia" data-author="pramoedya ananta toer" data-cat="Sastra & Klasik" data-price="145000" data-stock="14" onclick="window.location.href='book-detail.html?book=bumi-manusia'" style="cursor:pointer; background:white; border:1px solid #fee2e2; border-radius:14px; padding:14px; box-shadow:0 2px 8px rgba(0,0,0,0.03); display:flex; flex-direction:column;">
+            <div style="position:relative; width:100%; aspect-ratio:3/4; overflow:hidden; border-radius:8px; margin-bottom:12px;">
+                <img src="uploads/covers/bumi-manusia.jpg" alt="Bumi Manusia" style="width:100%; height:100%; object-fit:cover;">
+                
+            </div>
+            <span style="font-size:0.75rem; color:#800000; background:#FFF0F0; padding:2px 8px; border-radius:6px; font-weight:700; align-self:flex-start; margin-bottom:6px;">Sastra & Klasik</span>
+            <h4 style="font-size:0.95rem; font-weight:700; color:#1e293b; margin:0 0 4px; line-height:1.3;">Bumi Manusia</h4>
+            <p style="font-size:0.8rem; color:#64748b; margin:0 0 10px;">Pramoedya Ananta Toer</p>
+            <div style="margin-top:auto; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-weight:800; color:#800000; font-size:1.05rem;">Rp 145,000</span>
+                <div style="display:flex; gap:6px;">
+                    <a href="book-detail.html" class="btn btn-outline btn-sm" style="border:1.5px solid #800000; color:#800000; padding:5px 10px; border-radius:6px; font-size:0.8rem; text-decoration:none; font-weight:600;">🔍 Detail</a>
+                    
+                </div>
+            </div>
+        </div>
+        
+        <div class="book-card" data-title="pulang" data-author="leila s. chudori" data-cat="Non Fiksi" data-price="115000" data-stock="10" onclick="window.location.href='book-detail.html?book=pulang'" style="cursor:pointer; background:white; border:1px solid #fee2e2; border-radius:14px; padding:14px; box-shadow:0 2px 8px rgba(0,0,0,0.03); display:flex; flex-direction:column;">
+            <div style="position:relative; width:100%; aspect-ratio:3/4; overflow:hidden; border-radius:8px; margin-bottom:12px;">
+                <img src="uploads/covers/pulang.jpg" alt="Pulang" style="width:100%; height:100%; object-fit:cover;">
+                
+            </div>
+            <span style="font-size:0.75rem; color:#800000; background:#FFF0F0; padding:2px 8px; border-radius:6px; font-weight:700; align-self:flex-start; margin-bottom:6px;">Non Fiksi</span>
+            <h4 style="font-size:0.95rem; font-weight:700; color:#1e293b; margin:0 0 4px; line-height:1.3;">Pulang</h4>
+            <p style="font-size:0.8rem; color:#64748b; margin:0 0 10px;">Leila S. Chudori</p>
+            <div style="margin-top:auto; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-weight:800; color:#800000; font-size:1.05rem;">Rp 115,000</span>
+                <div style="display:flex; gap:6px;">
+                    <a href="book-detail.html" class="btn btn-outline btn-sm" style="border:1.5px solid #800000; color:#800000; padding:5px 10px; border-radius:6px; font-size:0.8rem; text-decoration:none; font-weight:600;">🔍 Detail</a>
+                    
+                </div>
+            </div>
+        </div>
+        
+        <div class="book-card" data-title="atomic habits" data-author="james clear" data-cat="Non Fiksi" data-price="118000" data-stock="22" onclick="window.location.href='book-detail.html?book=mindset'" style="cursor:pointer; background:white; border:1px solid #fee2e2; border-radius:14px; padding:14px; box-shadow:0 2px 8px rgba(0,0,0,0.03); display:flex; flex-direction:column;">
+            <div style="position:relative; width:100%; aspect-ratio:3/4; overflow:hidden; border-radius:8px; margin-bottom:12px;">
+                <img src="uploads/covers/mindset.jpg" alt="Atomic Habits" style="width:100%; height:100%; object-fit:cover;">
+                
+            </div>
+            <span style="font-size:0.75rem; color:#800000; background:#FFF0F0; padding:2px 8px; border-radius:6px; font-weight:700; align-self:flex-start; margin-bottom:6px;">Non Fiksi</span>
+            <h4 style="font-size:0.95rem; font-weight:700; color:#1e293b; margin:0 0 4px; line-height:1.3;">Atomic Habits</h4>
+            <p style="font-size:0.8rem; color:#64748b; margin:0 0 10px;">James Clear</p>
+            <div style="margin-top:auto; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-weight:800; color:#800000; font-size:1.05rem;">Rp 118,000</span>
+                <div style="display:flex; gap:6px;">
+                    <a href="book-detail.html" class="btn btn-outline btn-sm" style="border:1.5px solid #800000; color:#800000; padding:5px 10px; border-radius:6px; font-size:0.8rem; text-decoration:none; font-weight:600;">🔍 Detail</a>
+                    
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <!-- JAVASCRIPT FILTERING & SORTING -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('searchInput');
+        const catSelect = document.getElementById('catSelect');
+        const sortSelect = document.getElementById('sortSelect');
+        const btnFilter = document.getElementById('btnFilter');
+        const btnReset = document.getElementById('btnReset');
+        const grid = document.getElementById('booksGrid');
+        const cards = Array.from(grid.getElementsByClassName('book-card'));
+        const shownCount = document.getElementById('shownCount');
+
+        // Check URL params
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('kategori')) {
+            const k = urlParams.get('kategori');
+            for(let opt of catSelect.options) {
+                if(opt.value.toLowerCase().includes(k.toLowerCase())) {
+                    catSelect.value = opt.value;
+                    break;
+                }
+            }
+        }
+        if (urlParams.get('sort')) {
+            sortSelect.value = urlParams.get('sort');
+        }
+
+        function filterAndSort() {
+            const query = searchInput.value.toLowerCase().trim();
+            const cat = catSelect.value;
+            const sort = sortSelect.value;
+
+            let visibleCards = [];
+
+            cards.forEach(card => {
+                const title = card.getAttribute('data-title');
+                const author = card.getAttribute('data-author');
+                const cardCat = card.getAttribute('data-cat');
+                const stock = parseInt(card.getAttribute('data-stock'));
+
+                let matchQuery = !query || title.includes(query) || author.includes(query);
+                let matchCat = cat === 'all' || cardCat === cat;
+                let matchStock = true;
+
+                if (sort === 'out_of_stock') {
+                    matchStock = stock <= 0;
+                }
+
+                if (matchQuery && matchCat && matchStock) {
+                    card.style.display = 'flex';
+                    visibleCards.push(card);
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Sorting visible
+            if (sort === 'az') {
+                visibleCards.sort((a,b) => a.getAttribute('data-title').localeCompare(b.getAttribute('data-title')));
+            } else if (sort === 'price_low') {
+                visibleCards.sort((a,b) => parseInt(a.getAttribute('data-price')) - parseInt(b.getAttribute('data-price')));
+            } else if (sort === 'price_high') {
+                visibleCards.sort((a,b) => parseInt(b.getAttribute('data-price')) - parseInt(a.getAttribute('data-price')));
+            }
+
+            visibleCards.forEach(c => grid.appendChild(c));
+            shownCount.innerText = visibleCards.length;
+        }
+
+        btnFilter.addEventListener('click', filterAndSort);
+        searchInput.addEventListener('keyup', filterAndSort);
+        catSelect.addEventListener('change', filterAndSort);
+        sortSelect.addEventListener('change', filterAndSort);
+
+        btnReset.addEventListener('click', function() {
+            searchInput.value = '';
+            catSelect.value = 'all';
+            sortSelect.value = 'latest';
+            filterAndSort();
+        });
+
+        // Run once
+        filterAndSort();
+    });
+    </script>
+    
+    </div>
+</main>
+
+    <footer style="background:#0F172A; color:white; border-top:1px solid #1e293b; padding:36px 0 24px; margin-top:auto;">
+        <div class="container" style="max-width:1200px; margin:0 auto; padding:0 16px;">
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:28px; padding-bottom:28px; border-bottom:1px solid rgba(255,255,255,0.1);">
+                <div>
+                    <div style="font-weight:800; font-size:1.15rem; color:white; margin-bottom:10px; display:flex; align-items:center; gap:9px;">
+                        <img src="images/pustakamart.png" alt="PustakaMart" style="height:30px; width:30px; object-fit:contain; background:white; border-radius:6px; padding:2px;">
+                        <span>PUSTAKAMART</span>
+                    </div>
+                    <p style="font-size:0.85rem; color:rgba(255,255,255,0.6); line-height:1.6; margin:0 0 12px;">
+                        Platform Toko Buku Fisik Online terpercaya dengan kurasi ribuan judul original, transaksi aman, dan pengiriman ke seluruh nusantara.
+                    </p>
+                    <div style="font-size:0.8rem; color:#f87171; font-weight:600;">
+                        ★ 100% E-Commerce Bookstore Resmi
+                    </div>
+                </div>
+                <div>
+                    <div style="font-weight:700; font-size:0.85rem; text-transform:uppercase; color:#94a3b8; margin-bottom:12px; letter-spacing:0.05em;">Navigasi Cepat</div>
+                    <ul style="list-style:none; padding:0; margin:0; font-size:0.85rem; display:flex; flex-direction:column; gap:8px;">
+                        <li><a href="index.html" style="color:rgba(255,255,255,0.75); text-decoration:none;">Beranda</a></li>
+                        <li><a href="catalog.html" style="color:rgba(255,255,255,0.75); text-decoration:none;">Katalog Buku Fisik</a></li>
+                        <li><a href="book-detail-out-of-stock.html" style="color:#f87171; text-decoration:none;">Buku Stok Habis (Demo)</a></li>
+                        <li><a href="cart.html" style="color:rgba(255,255,255,0.75); text-decoration:none;">Keranjang Belanja</a></li>
+                        <li><a href="about.html" style="color:rgba(255,255,255,0.75); text-decoration:none;">Tentang Kami (About Us)</a></li>
+                    </ul>
+                </div>
+                <div style="background:rgba(255,255,255,0.05); padding:16px 18px; border-radius:12px; border:1px solid rgba(255,255,255,0.1);">
+                    <div style="font-weight:700; font-size:0.85rem; text-transform:uppercase; color:#60a5fa; margin-bottom:8px;">
+                        💬 Hubungi Pengembang
+                    </div>
+                    <div style="font-size:0.8rem; color:rgba(255,255,255,0.7); margin-bottom:10px;">
+                        Proyek Uji Sertifikasi Kompetensi (USK) Junior Web Developer (JWD)
+                    </div>
+                    <div style="display:flex; flex-direction:column; gap:6px; font-size:0.825rem;">
+                        <span style="color:#cbd5e1;">📱 WhatsApp: <strong style="color:white;">081547184307</strong></span>
+                        <span style="color:#cbd5e1;">📸 Instagram: <strong style="color:white;">@eddlyaa__</strong></span>
+                        <span style="color:#cbd5e1;">💻 GitHub: <strong style="color:white;">@zegow8</strong></span>
+                    </div>
+                </div>
+            </div>
+            <div style="padding-top:18px; font-size:0.75rem; color:rgba(255,255,255,0.4); text-align:center;">
+                &copy; 2026 PustakaMart. All rights reserved. Dibuat dengan cinta untuk USK JWD.
+            </div>
+        </div>
+    </footer>
+    <script src="assets/js/script.js"></script>
+    </body>
+    </html>
+    

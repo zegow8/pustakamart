@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masuk ke Akun - PustakaMart</title>
+    <link rel="icon" type="image/png" href="images/pustakamart.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container navbar-inner">
+            <a href="index.html" class="navbar-brand" style="display:inline-flex; align-items:center; gap:8px; text-decoration:none;">
+                <img src="images/pustakamart.png" alt="PustakaMart" style="height:34px; width:34px; object-fit:contain;">
+                <span style="font-size: 1.3rem; font-weight: 800; color: var(--primary);">PUSTAKAMART</span>
+            </a>
+            <div class="navbar-actions">
+                <a href="index.html" class="btn btn-outline btn-sm">Beranda</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="auth-wrapper" style="padding: 40px 16px;">
+        <div class="auth-card" style="max-width: 440px;">
+            <div class="auth-logo" style="display:flex; flex-direction:column; align-items:center; gap:8px; margin-bottom:20px;">
+                <img src="images/pustakamart.png" alt="PustakaMart" style="height:64px; width:64px; object-fit:contain;">
+                <span style="font-size: 1.5rem; font-weight: 800; color: var(--primary); letter-spacing:-0.5px;">PUSTAKAMART</span>
+            </div>
+            <h1 class="auth-title">Masuk ke Akun</h1>
+            <p class="auth-subtitle">Silakan login untuk memesan dan membeli buku fisik.</p>
+
+            <div id="loginAlert" style="display:none; margin-bottom: 18px; padding: 12px 14px; border-radius: 8px; font-size: 0.85rem; font-weight: 600;"></div>
+
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label class="form-label">Nama Lengkap <span style="color:var(--danger); font-weight:700;">*</span></label>
+                    <input type="text" id="loginName" class="form-control" required placeholder="Contoh: Administrator atau rain">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Alamat Email <span style="color:var(--danger); font-weight:700;">*</span></label>
+                    <input type="email" id="loginEmail" class="form-control" required placeholder="nama@email.com">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password <span style="color:var(--danger); font-weight:700;">*</span></label>
+                    <input type="password" id="loginPass" class="form-control" required placeholder="Masukkan kata sandi">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block" style="margin-top:12px; font-weight:700; padding:12px;">Masuk ke Akun</button>
+            </form>
+
+            <div class="auth-footer" style="margin-top:20px;">
+                Belum punya akun? <a href="register.html" style="font-weight:700;">Daftar di sini</a>
+            </div>
+
+            <div style="margin-top: 18px; padding: 14px; background: #FFF5F5; border: 1px dashed #F5B8B8; border-radius: 10px; font-size: 0.8rem; color: #634040;">
+                <div style="font-weight:700; margin-bottom:10px; text-align:center;">⚡ Akses Cepat Demo (Otomatis Masuk):</div>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
+                    <button type="button" onclick="quickLogin('admin')" style="padding:10px 8px; border-radius:8px; border:1.5px solid #800000; background:#800000; color:white; font-weight:700; font-size:0.8rem; cursor:pointer;">
+                        🛡️ Masuk Admin
+                    </button>
+                    <button type="button" onclick="quickLogin('user')" style="padding:10px 8px; border-radius:8px; border:1.5px solid #800000; background:white; color:#800000; font-weight:700; font-size:0.8rem; cursor:pointer;">
+                        👤 Masuk User
+                    </button>
+                </div>
+                <div style="margin-top:10px; font-size:0.74rem; color:#64748b; text-align:center; line-height:1.4;">
+                    Admin: <code>admin@pustakamart.com</code> / <code>admin123</code><br>
+                    User: <code>rain@gmail.com</code> / <code>123456</code>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const flashErr = sessionStorage.getItem('pm_flash_error');
+            const flashOk = sessionStorage.getItem('pm_flash_success');
+            const alertBox = document.getElementById('loginAlert');
+            if (flashErr) {
+                sessionStorage.removeItem('pm_flash_error');
+                alertBox.style.display = 'block';
+                alertBox.style.background = '#fee2e2';
+                alertBox.style.color = '#991b1b';
+                alertBox.style.border = '1px solid #fecaca';
+                alertBox.textContent = flashErr;
+            } else if (flashOk) {
+                sessionStorage.removeItem('pm_flash_success');
+                alertBox.style.display = 'block';
+                alertBox.style.background = '#dcfce7';
+                alertBox.style.color = '#166534';
+                alertBox.style.border = '1px solid #bbf7d0';
+                alertBox.textContent = flashOk;
+            }
+        });
+
+        function quickLogin(role) {
+            if (role === 'admin') {
+                localStorage.setItem('pm_auth_role', 'admin');
+                localStorage.setItem('pm_auth_name', 'Administrator');
+                localStorage.setItem('pm_auth_email', 'admin@pustakamart.com');
+                window.location.href = 'admin-dashboard.html';
+            } else {
+                localStorage.setItem('pm_auth_role', 'user');
+                localStorage.setItem('pm_auth_name', 'rain');
+                localStorage.setItem('pm_auth_email', 'rain@gmail.com');
+                window.location.href = 'user-dashboard.html';
+            }
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const name = document.getElementById('loginName').value.trim();
+            const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+            const pass = document.getElementById('loginPass').value;
+            const alertBox = document.getElementById('loginAlert');
+
+            // Default Demo Accounts
+            if (email === 'admin@pustakamart.com' && pass === 'admin123') {
+                localStorage.setItem('pm_auth_role', 'admin');
+                localStorage.setItem('pm_auth_name', name || 'Administrator');
+                localStorage.setItem('pm_auth_email', email);
+                window.location.href = 'admin-dashboard.html';
+                return;
+            }
+
+            if ((email === 'rain@gmail.com' || email === 'aily@gmail.com') && pass === '123456') {
+                localStorage.setItem('pm_auth_role', 'user');
+                localStorage.setItem('pm_auth_name', name || (email.startsWith('aily') ? 'aily' : 'rain'));
+                localStorage.setItem('pm_auth_email', email);
+                window.location.href = 'user-dashboard.html';
+                return;
+            }
+
+            // Check dynamically registered accounts in localStorage
+            const regUsers = JSON.parse(localStorage.getItem('pm_registered_users') || '[]');
+            const matched = regUsers.find(u => u.email.toLowerCase() === email && u.password === pass);
+            if (matched) {
+                localStorage.setItem('pm_auth_role', 'user');
+                localStorage.setItem('pm_auth_name', matched.name);
+                localStorage.setItem('pm_auth_email', matched.email);
+                window.location.href = 'user-dashboard.html';
+                return;
+            }
+
+            alertBox.style.display = 'block';
+            alertBox.style.background = '#fee2e2';
+            alertBox.style.color = '#991b1b';
+            alertBox.style.border = '1px solid #fecaca';
+            alertBox.textContent = 'Email atau password tidak sesuai! Coba gunakan akun demo di bawah.';
+        }
+    </script>
+</body>
+</html>

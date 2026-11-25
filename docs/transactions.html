@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riwayat Pembelian Buku - User Area - PustakaMart</title>
+    <link rel="icon" type="image/png" href="images/pustakamart.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+        html, body { width: 100%; max-width: 100vw; overflow-x: hidden; margin: 0; padding: 0; background-color: var(--bg-main); font-family: 'Inter', sans-serif; }
+        body { display: flex; flex-direction: column; min-height: 100vh; min-width: 0; }
+        .badge-cart { background: #800000; color: white; font-size: 0.72rem; font-weight: 800; padding: 2px 7px; border-radius: 12px; line-height: 1.2; }
+        .badge-notif { background: #dc2626; color: white; font-size: 0.65rem; padding: 2px 6px; border-radius: 10px; font-weight: 700; margin-left: 4px; }
+        .status-badge { font-size: 0.72rem; font-weight: 700; padding: 3px 8px; border-radius: 14px; white-space: nowrap; display: inline-block; }
+        .filter-pill { cursor: pointer; padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; text-decoration: none; border: 1.5px solid #e2e8f0; background: white; color: #475569; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s ease; }
+        .filter-pill:hover { border-color: #800000; color: #800000; }
+        .filter-pill.active { background: #800000 !important; color: white !important; border-color: #800000 !important; }
+    </style>
+<script src="assets/js/script.js"></script>
+<script>checkAuthGuard("user");</script>
+</head>
+<body>
+
+<nav class="navbar-user" style="background:white; border-bottom:2px solid #800000; box-shadow:0 1px 3px rgba(0,0,0,0.05); width:100%; min-width:0;">
+    <div class="container" style="max-width:1200px; margin:0 auto; padding:0 16px;">
+        <!-- Baris Atas -->
+        <div class="navbar-user-top" style="display:flex; justify-content:space-between; align-items:center; padding:12px 0;">
+            <a href="user-dashboard.html" class="brand" style="display:inline-flex; align-items:center; gap:9px; text-decoration:none;">
+                <img src="images/pustakamart.png" alt="PustakaMart" style="height:34px; width:34px; object-fit:contain;">
+                <span style="font-size:1.4rem; font-weight:800; color:var(--primary); letter-spacing:-0.5px;">PUSTAKAMART</span>
+            </a>
+            <div class="navbar-user-icons" style="display:flex; gap:20px; align-items:center;">
+                <a href="user-catalog.html" class="" style="color:var(--text-main); font-size:0.9rem; font-weight:600; text-decoration:none;">📚 Katalog Buku</a>
+                <a href="cart.html" class="" style="display:inline-flex; align-items:center; gap:6px; color:var(--text-main); font-size:0.9rem; font-weight:600; text-decoration:none;">
+                    <span>🛒 Keranjang</span>
+                    <span class="badge-cart">2</span>
+                </a>
+                <a href="user-notifications.html" style="display:inline-flex; align-items:center; gap:5px; color:var(--text-main); font-size:0.9rem; font-weight:600; text-decoration:none;"><span>🔔 Notifikasi</span><span class="badge-notif" style="margin-left:0;">2</span></a>
+                <a href="profile.html" class="" style="color:var(--text-main); font-size:0.9rem; font-weight:600; text-decoration:none;">👤 rain</a>
+                <a href="index.html" class="logout-link" style="color:var(--danger) !important; font-size:0.9rem; font-weight:600; text-decoration:none;">Logout</a>
+            </div>
+        </div>
+        <!-- Baris Bawah (Tab) - HAPUS NOTIFIKASI -->
+        <div class="navbar-user-bottom" style="border-top:1px solid #fee2e2; display:flex; gap:24px; padding:0; overflow-x:auto; white-space:nowrap;">
+            <a href="user-dashboard.html" class="" style="color:#64748b; font-weight:600; font-size:0.9rem; text-decoration:none; padding:12px 0; border-bottom:3px solid transparent;">Beranda</a>
+            <a href="user-catalog.html" class="" style="color:#64748b; font-weight:600; font-size:0.9rem; text-decoration:none; padding:12px 0; border-bottom:3px solid transparent;">Katalog Buku</a>
+            <a href="transactions.html" class="active" style="color:#800000; font-weight:600; font-size:0.9rem; text-decoration:none; padding:12px 0; border-bottom:3px solid #800000;">Riwayat Pembelian</a>
+            <a href="user-chat.html" style="color:#64748b; font-weight:600; font-size:0.9rem; text-decoration:none; padding:12px 0; border-bottom:3px solid transparent;">💬 Contact to Admin <span class="badge-notif" style="background:#2563eb;">3</span></a>
+                <a href="user-notifications.html" style="color:#64748b; font-weight:600; font-size:0.9rem; text-decoration:none; padding:12px 0; border-bottom:3px solid transparent;">🔔 Notifikasi <span class="badge-notif">2</span></a>
+            <a href="profile.html" class="" style="color:#64748b; font-weight:600; font-size:0.9rem; text-decoration:none; padding:12px 0; border-bottom:3px solid transparent;">Pengaturan Profil</a>
+        </div>
+    </div>
+</nav>
+
+<div class="page-wrap" style="max-width:1200px; width:100%; margin:0 auto; padding:24px 16px; flex:1; min-width:0; box-sizing:border-box;">
+    
+    <div style="margin-bottom: 24px;">
+        <h1 style="font-size: 2rem; font-weight: 800; color: #4A0000; margin: 0 0 6px;">Riwayat Pembelian Buku</h1>
+        <p style="color: #64748b; font-size: 0.95rem; margin: 0;">Daftar seluruh pesanan pembelian buku yang pernah Anda lakukan</p>
+    </div>
+
+    <!-- FILTER STATUS TABS (Sama Persis Plek Ketiplek Screenshot 1) -->
+    <div style="display:flex; gap:10px; overflow-x:auto; white-space:nowrap; padding-bottom:12px; margin-bottom:24px; -webkit-overflow-scrolling:touch;">
+        <a class="filter-pill active" data-filter="all">Semua (6)</a>
+        <a class="filter-pill" data-filter="menunggu">⏳ Menunggu ACC (1)</a>
+        <a class="filter-pill" data-filter="dikemas">Dikemas (1)</a>
+        <a class="filter-pill" data-filter="dikirim">Dikirim (1)</a>
+        <a class="filter-pill" data-filter="selesai">Selesai (1)</a>
+        <a class="filter-pill" data-filter="dibatalkan">Dibatalkan (1)</a>
+        <a class="filter-pill" data-filter="ditolak">Ditolak (1)</a>
+    </div>
+
+    <!-- LIST OF 6 REALISTIC ORDERS -->
+    <div id="txList" style="display:flex; flex-direction:column; gap:16px;">
+        <!-- Order 1: Menunggu ACC -->
+        <div class="tx-card" data-status="menunggu" style="background:white; border:1px solid #fee2e2; border-radius:14px; padding:20px; box-shadow:0 2px 8px rgba(0,0,0,0.03);">
+            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #f1f5f9; padding-bottom:12px; margin-bottom:14px;">
+                <div>
+                    <span style="font-weight:800; color:#1e293b; font-size:0.95rem;">RP-20261124-A1098</span>
+                    <span style="color:#64748b; font-size:0.8rem; margin-left:8px;">24 Nov 2026, 08:30 • Transfer BCA</span>
+                </div>
+                <span class="status-badge" style="background:#fef3c7; color:#92400e; border:1px solid #fde68a;">⏳ Menunggu ACC</span>
+            </div>
+            <div style="display:flex; gap:16px; align-items:center;">
+                <img src="uploads/covers/notasi.jpg" alt="Notasi" style="width:60px; height:80px; object-fit:cover; border-radius:6px;">
+                <div style="flex:1;">
+                    <h4 style="font-size:1rem; font-weight:700; color:#1e293b; margin:0 0 4px;">Notasi</h4>
+                    <p style="font-size:0.8rem; color:#64748b; margin:0;">1 Buku x Rp 98.000 (+ Ongkir Rp 18.000)</p>
+                    <div style="font-weight:800; color:#800000; font-size:1.05rem; margin-top:4px;">Total: Rp 116.000</div>
+                </div>
+                <div>
+                    <a href="transaction-detail.html" style="display:inline-block; border:1.5px solid #800000; color:#800000; padding:6px 16px; border-radius:8px; font-weight:700; font-size:0.85rem; text-decoration:none;">Detail Pesanan</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order 2: Dikemas -->
+        <div class="tx-card" data-status="dikemas" style="background:white; border:1px solid #fee2e2; border-radius:14px; padding:20px; box-shadow:0 2px 8px rgba(0,0,0,0.03);">
+            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #f1f5f9; padding-bottom:12px; margin-bottom:14px;">
+                <div>
+                    <span style="font-weight:800; color:#1e293b; font-size:0.95rem;">RP-20261123-C1955A</span>
+                    <span style="color:#64748b; font-size:0.8rem; margin-left:8px;">23 Nov 2026, 15:44 • Transfer BCA</span>
+                </div>
+                <span class="status-badge" style="background:#fef3c7; color:#b45309; border:1px solid #fde68a;">📦 Sedang Dikemas</span>
+            </div>
+            <div style="display:flex; gap:16px; align-items:center;">
+                <img src="uploads/covers/laut-bercerita.jpg" alt="Laut Bercerita" style="width:60px; height:80px; object-fit:cover; border-radius:6px;">
+                <div style="flex:1;">
+                    <h4 style="font-size:1rem; font-weight:700; color:#1e293b; margin:0 0 4px;">Laut Bercerita</h4>
+                    <p style="font-size:0.8rem; color:#64748b; margin:0;">1 Buku x Rp 109.000 (+ Ongkir Rp 10.000)</p>
+                    <div style="font-weight:800; color:#800000; font-size:1.05rem; margin-top:4px;">Total: Rp 119.000</div>
+                </div>
+                <div>
+                    <a href="transaction-detail.html" style="display:inline-block; border:1.5px solid #800000; color:#800000; padding:6px 16px; border-radius:8px; font-weight:700; font-size:0.85rem; text-decoration:none;">Detail Pesanan</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order 3: Dikirim -->
+        <div class="tx-card" data-status="dikirim" style="background:white; border:1px solid #fee2e2; border-radius:14px; padding:20px; box-shadow:0 2px 8px rgba(0,0,0,0.03);">
+            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #f1f5f9; padding-bottom:12px; margin-bottom:14px;">
+                <div>
+                    <span style="font-weight:800; color:#1e293b; font-size:0.95rem;">RP-20261123-206CE4</span>
+                    <span style="color:#64748b; font-size:0.8rem; margin-left:8px;">23 Nov 2026, 15:44 • Transfer BCA</span>
+                </div>
+                <span class="status-badge" style="background:#e0f2fe; color:#0369a1; border:1px solid #bae6fd;">🚚 Sedang Dikirim (JNE: JNE-9948192)</span>
+            </div>
+            <div style="display:flex; gap:16px; align-items:center;">
+                <img src="uploads/covers/sapiens.jpg" alt="Sapiens" style="width:60px; height:80px; object-fit:cover; border-radius:6px;">
+                <div style="flex:1;">
+                    <h4 style="font-size:1rem; font-weight:700; color:#1e293b; margin:0 0 4px;">Sapiens: Riwayat Singkat Umat Manusia</h4>
+                    <p style="font-size:0.8rem; color:#64748b; margin:0;">1 Buku x Rp 135.000 (+ Ongkir Rp 82.000)</p>
+                    <div style="font-weight:800; color:#800000; font-size:1.05rem; margin-top:4px;">Total: Rp 217.000</div>
+                </div>
+                <div>
+                    <a href="transaction-detail.html" style="display:inline-block; border:1.5px solid #800000; color:#800000; padding:6px 16px; border-radius:8px; font-weight:700; font-size:0.85rem; text-decoration:none;">Lacak Resi</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order 4: Selesai -->
+        <div class="tx-card" data-status="selesai" style="background:white; border:1px solid #fee2e2; border-radius:14px; padding:20px; box-shadow:0 2px 8px rgba(0,0,0,0.03);">
+            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #f1f5f9; padding-bottom:12px; margin-bottom:14px;">
+                <div>
+                    <span style="font-weight:800; color:#1e293b; font-size:0.95rem;">RP-20261123-3490D7</span>
+                    <span style="color:#64748b; font-size:0.8rem; margin-left:8px;">23 Nov 2026, 15:45 • Transfer BCA</span>
+                </div>
+                <span class="status-badge" style="background:#dcfce7; color:#15803d; border:1px solid #bbf7d0;">✓ Pesanan Selesai</span>
+            </div>
+            <div style="display:flex; gap:16px; align-items:center;">
+                <img src="uploads/covers/how-to-win-friends.jpg" alt="How to Win Friends" style="width:60px; height:80px; object-fit:cover; border-radius:6px;">
+                <div style="flex:1;">
+                    <h4 style="font-size:1rem; font-weight:700; color:#1e293b; margin:0 0 4px;">How to Win Friends and Influence People</h4>
+                    <p style="font-size:0.8rem; color:#64748b; margin:0;">1 Buku x Rp 89.000 (+ Ongkir Rp 20.000)</p>
+                    <div style="font-weight:800; color:#800000; font-size:1.05rem; margin-top:4px;">Total: Rp 109.000</div>
+                </div>
+                <div>
+                    <a href="transaction-detail.html" style="display:inline-block; border:1.5px solid #800000; color:#800000; padding:6px 16px; border-radius:8px; font-weight:700; font-size:0.85rem; text-decoration:none;">Lihat Invoice</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order 5: Dibatalkan -->
+        <div class="tx-card" data-status="dibatalkan" style="background:white; border:1px solid #fee2e2; border-radius:14px; padding:20px; box-shadow:0 2px 8px rgba(0,0,0,0.03);">
+            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #f1f5f9; padding-bottom:12px; margin-bottom:14px;">
+                <div>
+                    <span style="font-weight:800; color:#1e293b; font-size:0.95rem;">RP-20261122-CANCEL1</span>
+                    <span style="color:#64748b; font-size:0.8rem; margin-left:8px;">22 Nov 2026, 10:15 • Transfer BCA</span>
+                </div>
+                <span class="status-badge" style="background:#f1f5f9; color:#64748b; border:1px solid #e2e8f0;">✖ Dibatalkan Pembeli</span>
+            </div>
+            <div style="display:flex; gap:16px; align-items:center;">
+                <img src="uploads/covers/filosofi-teras.jpg" alt="Filosofi Teras" style="width:60px; height:80px; object-fit:cover; border-radius:6px;">
+                <div style="flex:1;">
+                    <h4 style="font-size:1rem; font-weight:700; color:#1e293b; margin:0 0 4px;">Filosofi Teras</h4>
+                    <p style="font-size:0.8rem; color:#64748b; margin:0;">1 Buku x Rp 98.000 (+ Ongkir Rp 15.000)</p>
+                    <div style="font-weight:800; color:#800000; font-size:1.05rem; margin-top:4px;">Total: Rp 113.000</div>
+                </div>
+                <div>
+                    <a href="transaction-detail.html" style="display:inline-block; border:1.5px solid #64748b; color:#64748b; padding:6px 16px; border-radius:8px; font-weight:700; font-size:0.85rem; text-decoration:none;">Detail</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order 6: Ditolak -->
+        <div class="tx-card" data-status="ditolak" style="background:white; border:1px solid #fee2e2; border-radius:14px; padding:20px; box-shadow:0 2px 8px rgba(0,0,0,0.03);">
+            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #f1f5f9; padding-bottom:12px; margin-bottom:14px;">
+                <div>
+                    <span style="font-weight:800; color:#1e293b; font-size:0.95rem;">RP-20261121-REJECT1</span>
+                    <span style="color:#64748b; font-size:0.8rem; margin-left:8px;">21 Nov 2026, 12:00 • Transfer BCA</span>
+                </div>
+                <span class="status-badge" style="background:#fee2e2; color:#991b1b; border:1px solid #fca5a5;">⛔ Pembayaran Ditolak Admin</span>
+            </div>
+            <div style="display:flex; gap:16px; align-items:center;">
+                <img src="uploads/covers/bumi-manusia.jpg" alt="Bumi Manusia" style="width:60px; height:80px; object-fit:cover; border-radius:6px;">
+                <div style="flex:1;">
+                    <h4 style="font-size:1rem; font-weight:700; color:#1e293b; margin:0 0 4px;">Bumi Manusia</h4>
+                    <p style="font-size:0.8rem; color:#64748b; margin:0;">1 Buku x Rp 145.000 (+ Ongkir Rp 20.000)</p>
+                    <div style="font-weight:800; color:#800000; font-size:1.05rem; margin-top:4px;">Total: Rp 165.000</div>
+                    <div style="font-size:0.8rem; color:#dc2626; margin-top:4px;">Alasan: Bukti transfer buram/tidak terbaca</div>
+                </div>
+                <div>
+                    <a href="transaction-detail.html" style="display:inline-block; border:1.5px solid #dc2626; color:#dc2626; padding:6px 16px; border-radius:8px; font-weight:700; font-size:0.85rem; text-decoration:none;">Upload Ulang Bukti</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT FILTER TAB -->
+    <script>
+    document.querySelectorAll('.filter-pill').forEach(pill => {
+        pill.addEventListener('click', function() {
+            document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+            this.classList.add('active');
+            const target = this.getAttribute('data-filter');
+            document.querySelectorAll('.tx-card').forEach(card => {
+                if (target === 'all' || card.getAttribute('data-status') === target) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    });
+    </script>
+    
+</div>
+
+    <footer style="background:#0F172A; color:white; border-top:1px solid #1e293b; padding:36px 0 24px; margin-top:auto;">
+        <div class="container" style="max-width:1200px; margin:0 auto; padding:0 16px;">
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:28px; padding-bottom:28px; border-bottom:1px solid rgba(255,255,255,0.1);">
+                <div>
+                    <div style="font-weight:800; font-size:1.15rem; color:white; margin-bottom:10px; display:flex; align-items:center; gap:9px;">
+                        <img src="images/pustakamart.png" alt="PustakaMart" style="height:30px; width:30px; object-fit:contain; background:white; border-radius:6px; padding:2px;">
+                        <span>PUSTAKAMART</span>
+                    </div>
+                    <p style="font-size:0.85rem; color:rgba(255,255,255,0.6); line-height:1.6; margin:0 0 12px;">
+                        Platform Toko Buku Fisik Online terpercaya dengan kurasi ribuan judul original, transaksi aman, dan pengiriman ke seluruh nusantara.
+                    </p>
+                    <div style="font-size:0.8rem; color:#f87171; font-weight:600;">
+                        ★ 100% E-Commerce Bookstore Resmi
+                    </div>
+                </div>
+                <div>
+                    <div style="font-weight:700; font-size:0.85rem; text-transform:uppercase; color:#94a3b8; margin-bottom:12px; letter-spacing:0.05em;">Navigasi Cepat</div>
+                    <ul style="list-style:none; padding:0; margin:0; font-size:0.85rem; display:flex; flex-direction:column; gap:8px;">
+                        <li><a href="index.html" style="color:rgba(255,255,255,0.75); text-decoration:none;">Beranda</a></li>
+                        <li><a href="catalog.html" style="color:rgba(255,255,255,0.75); text-decoration:none;">Katalog Buku Fisik</a></li>
+                        <li><a href="book-detail-out-of-stock.html" style="color:#f87171; text-decoration:none;">Buku Stok Habis (Demo)</a></li>
+                        <li><a href="cart.html" style="color:rgba(255,255,255,0.75); text-decoration:none;">Keranjang Belanja</a></li>
+                        <li><a href="about.html" style="color:rgba(255,255,255,0.75); text-decoration:none;">Tentang Kami (About Us)</a></li>
+                    </ul>
+                </div>
+                <div style="background:rgba(255,255,255,0.05); padding:16px 18px; border-radius:12px; border:1px solid rgba(255,255,255,0.1);">
+                    <div style="font-weight:700; font-size:0.85rem; text-transform:uppercase; color:#60a5fa; margin-bottom:8px;">
+                        💬 Hubungi Pengembang
+                    </div>
+                    <div style="font-size:0.8rem; color:rgba(255,255,255,0.7); margin-bottom:10px;">
+                        Proyek Uji Sertifikasi Kompetensi (USK) Junior Web Developer (JWD)
+                    </div>
+                    <div style="display:flex; flex-direction:column; gap:6px; font-size:0.825rem;">
+                        <span style="color:#cbd5e1;">📱 WhatsApp: <strong style="color:white;">081547184307</strong></span>
+                        <span style="color:#cbd5e1;">📸 Instagram: <strong style="color:white;">@eddlyaa__</strong></span>
+                        <span style="color:#cbd5e1;">💻 GitHub: <strong style="color:white;">@zegow8</strong></span>
+                    </div>
+                </div>
+            </div>
+            <div style="padding-top:18px; font-size:0.75rem; color:rgba(255,255,255,0.4); text-align:center;">
+                &copy; 2026 PustakaMart. All rights reserved. Dibuat dengan cinta untuk USK JWD.
+            </div>
+        </div>
+    </footer>
+    <script src="assets/js/script.js"></script>
+    <script>
+document.querySelectorAll(".filter-pill").forEach(pill => {
+    pill.addEventListener("click", function() {
+        document.querySelectorAll(".filter-pill").forEach(p => p.classList.remove("active"));
+        this.classList.add("active");
+        const target = this.getAttribute("data-filter");
+        document.querySelectorAll(".tx-card").forEach(card => {
+            card.style.display = (target === "all" || card.getAttribute("data-status") === target) ? "block" : "none";
+        });
+    });
+});
+</script>
+</body>
+    </html>
+    

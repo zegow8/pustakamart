@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Buku - PustakaMart</title>
+    <link rel="icon" type="image/png" href="images/pustakamart.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        .badge-cart { background: #800000; color: white; font-size: 0.72rem; font-weight: 800; padding: 2px 7px; border-radius: 12px; line-height: 1.2; }
+        .badge-notif { background: #dc2626; color: white; font-size: 0.65rem; padding: 2px 6px; border-radius: 10px; font-weight: 700; margin-left: 4px; }
+        .detail-main-grid { display: grid; grid-template-columns: 280px 1fr; gap: 36px; align-items: start; }
+        .detail-meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; background: #FFF8F8; border: 1px solid #F7C5C5; border-radius: 12px; padding: 18px 22px; margin-bottom: 22px; }
+        .related-books-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 18px; }
+        .footer-responsive-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.4fr; gap: 32px; }
+        @media (max-width: 820px) {
+            .detail-main-grid { grid-template-columns: 1fr; gap: 24px; }
+            .detail-cover-wrap { max-width: 240px; margin: 0 auto; }
+            .footer-responsive-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 540px) {
+            .detail-meta-grid { grid-template-columns: 1fr; gap: 12px; }
+            .related-books-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .footer-responsive-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar" id="publicNavbar">
+    <div class="container navbar-inner">
+        <a href="index.html" class="navbar-brand" style="display:inline-flex; align-items:center; gap:9px; text-decoration:none;">
+            <img src="images/pustakamart.png" alt="PustakaMart" style="height:34px; width:34px; object-fit:contain;">
+            <span style="font-size:1.4rem; font-weight:800; color:var(--primary); letter-spacing:-0.5px;">PUSTAKAMART</span>
+        </a>
+        <ul class="navbar-nav">
+            <li><a href="index.html">Beranda</a></li>
+            <li><a href="catalog.html" class="active">Katalog Buku</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Hubungi Kami</a></li>
+        </ul>
+        <div class="navbar-actions">
+            <div id="public-nav-actions" style="display:flex; gap:10px; align-items:center;">
+                <a href="login.html" class="btn btn-outline btn-sm">Login</a>
+                <a href="register.html" class="btn btn-primary btn-sm">Daftar</a>
+            </div>
+            <button class="navbar-hamburger" id="navbar-hamburger" aria-label="Menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+    <div class="navbar-mobile-menu" id="navbar-mobile-menu">
+        <a href="index.html">Beranda</a>
+        <a href="catalog.html">Katalog Buku</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Hubungi Kami</a>
+        <div id="mobile-auth-links" style="display:flex; flex-direction:column; gap:4px; margin-top:6px;">
+            <a href="login.html">Login</a>
+            <a href="register.html" style="color:var(--primary); font-weight:700;">Daftar Gratis</a>
+        </div>
+    </div>
+</nav>
+
+<nav class="navbar-user" id="userAreaNavbar" style="display:none; background:white; border-bottom:2px solid #800000; box-shadow:0 1px 3px rgba(0,0,0,0.05); width:100%; min-width:0;">
+    <div class="container" style="max-width:1200px; margin:0 auto; padding:0 16px;">
+        <div class="navbar-user-top" style="display:flex; justify-content:space-between; align-items:center; padding:12px 0;">
+            <a href="user-dashboard.html" class="brand" style="display:inline-flex; align-items:center; gap:9px; text-decoration:none;">
+                <img src="images/pustakamart.png" alt="PustakaMart" style="height:34px; width:34px; object-fit:contain;">
+                <span style="font-size:1.4rem; font-weight:800; color:var(--primary); letter-spacing:-0.5px;">PUSTAKAMART</span>
+            </a>
+            <div class="navbar-user-icons" style="display:flex; gap:20px; align-items:center;">
+                <a href="user-catalog.html" class="active" style="color:var(--text-main); font-size:0.9rem; font-weight:600; text-decoration:none;">📚 Katalog Buku</a>
+                <a href="cart.html" style="display:inline-flex; align-items:center; gap:6px; color:var(--text-main); font-size:0.9rem; font-weight:600; text-decoration:none;">
+                    <span>🛒 Keranjang</span>
+                    <span class="badge-cart">2</span>
+                </a>
+                <a href="user-notifications.html" style="display:inline-flex; align-items:center; gap:5px; color:var(--text-main); font-size:0.9rem; font-weight:600; text-decoration:none;"><span>🔔 Notifikasi</span><span class="badge-notif" style="margin-left:0;">2</span></a>
+                <a href="profile.html" data-auth-name="true" style="color:var(--text-main); font-size:0.9rem; font-weight:600; text-decoration:none;">👤 rain</a>
+                <a href="index.html" onclick="pmLogout(event)" class="logout-link" style="color:var(--danger) !important; font-size:0.9rem; font-weight:600; text-decoration:none;">Logout</a>
+            </div>
+        </div>
+        <div class="navbar-user-bottom" style="border-top:1px solid #fee2e2; display:flex; gap:24px; padding:0; overflow-x:auto; white-space:nowrap;">
+            <a href="user-dashboard.html" style="color:#64748b; font-weight:600; font-size:0.9rem; text-decoration:none; padding:12px 0; border-bottom:3px solid transparent;">Beranda</a>
+            <a href="user-catalog.html" class="active" style="color:#800000; font-weight:600; font-size:0.9rem; text-decoration:none; padding:12px 0; border-bottom:3px solid #800000;">Katalog Buku</a>
+            <a href="transactions.html" style="color:#64748b; font-weight:600; font-size:0.9rem; text-decoration:none; padding:12px 0; border-bottom:3px solid transparent;">Riwayat Pembelian</a>
+            <a href="user-chat.html" style="color:#64748b; font-weight:600; font-size:0.9rem; text-decoration:none; padding:12px 0; border-bottom:3px solid transparent;">💬 Contact to Admin <span class="badge-notif" style="background:#2563eb;">3</span></a>
+            <a href="user-notifications.html" style="color:#64748b; font-weight:600; font-size:0.9rem; text-decoration:none; padding:12px 0; border-bottom:3px solid transparent;">🔔 Notifikasi <span class="badge-notif">2</span></a>
+            <a href="profile.html" style="color:#64748b; font-weight:600; font-size:0.9rem; text-decoration:none; padding:12px 0; border-bottom:3px solid transparent;">Pengaturan Profil</a>
+        </div>
+    </div>
+</nav>
+
+<main class="main-content">
+    <div class="container">
+        <div style="margin-bottom: 20px;">
+            <a href="catalog.html" id="backToCatalogLink" style="color:#800000; text-decoration:none; font-weight:700; font-size:0.9rem;">&larr; Kembali ke Katalog Buku</a>
+        </div>
+
+        <!-- DETAIL UTAMA (Persis Screenshot 3) -->
+        <div class="detail-main-grid" style="margin-bottom: 48px;">
+            <div class="detail-cover-wrap" style="text-align:center;">
+                <div style="border-radius: 14px; overflow: hidden; box-shadow: 0 12px 28px rgba(0,0,0,0.12); border: 1px solid var(--border); background: white;">
+                    <img id="bookCover" src="uploads/covers/bumi-manusia.jpg" alt="Cover Buku" style="width:100%; display:block; object-fit:cover;">
+                </div>
+                <div style="margin-top: 14px;">
+                    <span id="bookCatPill" style="display:inline-block; background:#FFD4D4; color:#800000; font-size:0.75rem; font-weight:800; padding:5px 14px; border-radius:20px;">Fiksi &amp; Sastra</span>
+                </div>
+            </div>
+
+            <div>
+                <h1 id="bookTitle" style="font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 800; color: #4A0000; margin: 0 0 6px 0;">Bumi Manusia</h1>
+                <div id="bookAuthor" style="font-size: 1rem; color: #64748b; font-weight: 600; margin-bottom: 20px;">oleh Pramoedya Ananta Toer</div>
+
+                <div class="detail-meta-grid">
+                    <div>
+                        <div style="font-size: 0.72rem; font-weight: 800; color: #94a3b8; text-transform: uppercase;">PENERBIT</div>
+                        <div id="bookPublisher" style="font-size: 0.95rem; font-weight: 700; color: #1e293b; margin-top: 2px;">Lentera Dipantara</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 0.72rem; font-weight: 800; color: #94a3b8; text-transform: uppercase;">TAHUN</div>
+                        <div id="bookYear" style="font-size: 0.95rem; font-weight: 700; color: #1e293b; margin-top: 2px;">2005</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 0.72rem; font-weight: 800; color: #94a3b8; text-transform: uppercase;">ISBN</div>
+                        <div id="bookIsbn" style="font-size: 0.95rem; font-weight: 700; color: #1e293b; margin-top: 2px;">978-979-97312-3-4</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 0.72rem; font-weight: 800; color: #94a3b8; text-transform: uppercase;">KATEGORI</div>
+                        <div id="bookCategory" style="font-size: 0.95rem; font-weight: 700; color: #1e293b; margin-top: 2px;">Fiksi &amp; Sastra</div>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 24px;">
+                    <div style="font-size: 0.75rem; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px;">DESKRIPSI</div>
+                    <p id="bookDesc" style="font-size: 0.95rem; color: #334155; line-height: 1.65; margin: 0;">
+                        Roman tetralogi Buru karya Pramoedya Ananta Toer yang mengisahkan perjuangan Minke dan Nyai Ontosoroh di masa kolonial Hindia Belanda.
+                    </p>
+                </div>
+
+                <div style="background: white; border: 1px solid #F7C5C5; border-radius: 14px; padding: 22px; text-align: center; box-shadow: 0 4px 14px rgba(128,0,0,0.04);">
+                    <div style="font-size: 0.72rem; font-weight: 800; color: #64748b; text-transform: uppercase;">HARGA BUKU</div>
+                    <div id="bookPrice" style="font-size: 2rem; font-weight: 900; color: #800000; margin: 4px 0 8px;">Rp 207.000</div>
+                    <div id="bookStockBadge" style="margin-bottom: 18px;">
+                        <span style="display:inline-block; background:#dcfce7; color:#15803d; font-size:0.8rem; font-weight:700; padding:4px 12px; border-radius:20px;">Stok Tersedia: 24 pcs</span>
+                    </div>
+                    <div style="border-top: 1px dashed #e2e8f0; padding-top: 16px;" id="bookActionBox">
+                        <a href="login.html" class="btn btn-primary btn-block" style="background:#5c0000; color:white; font-weight:700; padding:14px; border-radius:10px; display:block; text-decoration:none;">
+                            Login untuk Membeli Buku Ini
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BUKU LAINNYA DARI KATEGORI INI -->
+        <section style="margin-bottom: 24px;">
+            <h2 style="font-size: 1.4rem; font-weight: 800; color: #4A0000; margin: 0 0 18px 0;">Buku Lainnya dari Kategori Ini</h2>
+            <div class="related-books-grid" id="relatedBooksGrid"></div>
+        </section>
+    </div>
+</main>
+
+<!-- FOOTER -->
+<footer style="background:#0F172A; color:white; border-top:1px solid #1e293b; padding:44px 0 24px; margin-top:auto;">
+    <div class="container">
+        <div class="footer-responsive-grid">
+            <div>
+                <div style="font-weight:800; font-size:1.2rem; color:white; margin-bottom:12px; display:flex; align-items:center; gap:9px;">
+                    <img src="images/pustakamart.png" alt="PustakaMart" style="height:32px; width:32px; object-fit:contain; background:white; border-radius:6px; padding:2px;">
+                    <span>PUSTAKAMART</span>
+                </div>
+                <p style="font-size:0.85rem; color:rgba(255,255,255,0.65); line-height:1.6; margin:0 0 14px;">
+                    Toko Buku Online Modern &amp; Terpercaya. Menghadirkan ribuan koleksi buku fisik original berkualitas dengan harga terbaik dan pengiriman cepat ke seluruh Indonesia.
+                </p>
+            </div>
+            <div>
+                <h4 style="color:white; font-size:0.95rem; font-weight:700; margin:0 0 14px; text-transform:uppercase;">Navigasi</h4>
+                <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px; font-size:0.875rem;">
+                    <li><a href="index.html" style="color:rgba(255,255,255,0.75); text-decoration:none;">Beranda</a></li>
+                    <li><a href="catalog.html" style="color:rgba(255,255,255,0.75); text-decoration:none;">Katalog Buku Lengkap</a></li>
+                    <li><a href="about.html" style="color:rgba(255,255,255,0.75); text-decoration:none;">About Us (Tentang Kami)</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="color:white; font-size:0.95rem; font-weight:700; margin:0 0 14px; text-transform:uppercase;">Layanan &amp; Akun</h4>
+                <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px; font-size:0.875rem;">
+                    <li><a href="login.html" style="color:rgba(255,255,255,0.75); text-decoration:none;">Masuk ke Akun</a></li>
+                    <li><a href="register.html" style="color:rgba(255,255,255,0.75); text-decoration:none;">Daftar Akun Baru</a></li>
+                    <li><a href="contact.html" style="color:rgba(255,255,255,0.75); text-decoration:none;">Hubungi Kami</a></li>
+                </ul>
+            </div>
+            <div style="background:rgba(255,255,255,0.04); padding:18px; border-radius:12px; border:1px solid rgba(255,255,255,0.08);">
+                <h4 style="color:#60a5fa; font-size:0.95rem; font-weight:700; margin:0 0 10px;">💬 Hubungi Developer</h4>
+                <div style="display:flex; flex-direction:column; gap:8px; font-size:0.83rem;">
+                    <span style="color:rgba(255,255,255,0.85);">📱 WhatsApp: <strong style="color:white;">081547184307</strong></span>
+                    <span style="color:rgba(255,255,255,0.85);">📸 Instagram: <strong style="color:white;">@eddlyaa__</strong></span>
+                    <span style="color:rgba(255,255,255,0.85);">💻 GitHub: <strong style="color:white;">@zegow8</strong></span>
+                </div>
+            </div>
+        </div>
+        <div style="margin-top:32px; padding-top:18px; border-top:1px solid rgba(255,255,255,0.1); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; font-size:0.82rem; color:rgba(255,255,255,0.6);">
+            <span>&copy; 2026 <strong>PustakaMart</strong>. All rights reserved.</span>
+            <span>Dibangun dengan Laravel 12 &amp; MySQL. Developer: <strong>@eddlyaa__ / @zegow8</strong></span>
+        </div>
+    </div>
+</footer>
+
+<script src="assets/js/script.js"></script>
+<script>
+    const BOOKS_DB = {
+        'bumi-manusia': { title: 'Bumi Manusia', author: 'Pramoedya Ananta Toer', publisher: 'Lentera Dipantara', year: 2005, isbn: '978-979-97312-3-4', cat: 'Fiksi & Sastra', price: 'Rp 207.000', stock: 24, cover: 'uploads/covers/bumi-manusia.jpg', desc: 'Roman tetralogi Buru karya Pramoedya Ananta Toer yang mengisahkan perjuangan Minke dan Nyai Ontosoroh di masa kolonial Hindia Belanda.' },
+        'laut-bercerita': { title: 'Laut Bercerita', author: 'Leila S. Chudori', publisher: 'Kepustakaan Populer Gramedia', year: 2017, isbn: '978-602-424-694-5', cat: 'Fiksi & Sastra', price: 'Rp 115.000', stock: 18, cover: 'uploads/covers/laut-bercerita.jpg', desc: 'Kisah persahabatan, cinta, keluarga, dan kehilangan para aktivis mahasiswa tahun 1998 yang menghilang tanpa jejak.' },
+        'cantik-itu-luka': { title: 'Cantik Itu Luka', author: 'Eka Kurniawan', publisher: 'Gramedia Pustaka Utama', year: 2002, isbn: '978-602-03-1258-3', cat: 'Fiksi & Sastra', price: 'Rp 125.000', stock: 12, cover: 'uploads/covers/cantik-itu-luka.jpg', desc: 'Kisah epik Dewi Ayu dan anak-anaknya yang memadukan sejarah kolonial, mitos, dan tragedi keluarga di kota Halimunda.' },
+        'pulang': { title: 'Pulang', author: 'Leila S. Chudori', publisher: 'KPG', year: 2012, isbn: '978-979-910-515-8', cat: 'Fiksi & Sastra', price: 'Rp 115.000', stock: 0, cover: 'uploads/covers/pulang.jpg', desc: 'Drama keluarga, cinta, pengkhianatan, dan kerinduan eksil politik Indonesia yang terdampar di Paris.' },
+        'anak-semua-bangsa': { title: 'Anak Semua Bangsa', author: 'Pramoedya Ananta Toer', publisher: 'Lentera Dipantara', year: 2006, isbn: '978-979-97312-4-1', cat: 'Fiksi & Sastra', price: 'Rp 195.000', stock: 9, cover: 'uploads/covers/anak-semua-bangsa.jpg', desc: 'Kelanjutan Bumi Manusia yang membawa Minke mengenal penderitaan rakyat jelata secara langsung di tanah Jawa.' },
+        'filosofi-teras': { title: 'Filosofi Teras', author: 'Henry Manampiring', publisher: 'Kompas Penerbit Buku', year: 2018, isbn: '978-602-412-518-9', cat: 'Pengembangan Diri', price: 'Rp 98.000', stock: 30, cover: 'uploads/covers/filosofi-teras.jpg', desc: 'Filsafat Yunani-Romawi kuno Stoikisme untuk mengatasi emosi negatif dan membangun mental yang tangguh.' },
+        'mindset': { title: 'Mindset', author: 'Carol S. Dweck', publisher: 'Baca', year: 2019, isbn: '978-602-648-634-9', cat: 'Pengembangan Diri', price: 'Rp 118.000', stock: 22, cover: 'uploads/covers/mindset.jpg', desc: 'Mengubah pola pikir tetap (fixed mindset) menjadi pola pikir bertumbuh (growth mindset) demi meraih potensi terbaik.' },
+        'how-to-win-friends': { title: 'How to Win Friends and Influence People', author: 'Dale Carnegie', publisher: 'Gramedia Pustaka Utama', year: 2015, isbn: '978-602-03-1988-9', cat: 'Pengembangan Diri', price: 'Rp 89.000', stock: 0, cover: 'uploads/covers/how-to-win-friends.jpg', desc: 'Buku klasik sepanjang masa tentang seni berkomunikasi, membangun relasi hangat, dan kepemimpinan.' },
+        'sapiens': { title: 'Sapiens: Riwayat Singkat Umat Manusia', author: 'Yuval Noah Harari', publisher: 'KPG', year: 2017, isbn: '978-602-424-416-3', cat: 'Sejarah & Sains', price: 'Rp 145.000', stock: 15, cover: 'uploads/covers/sapiens.jpg', desc: 'Riwayat singkat umat manusia dari zaman batu hingga era revolusi ilmiah dan kecerdasan buatan.' },
+        'rumah-kaca': { title: 'Rumah Kaca', author: 'Pramoedya Ananta Toer', publisher: 'Lentera Dipantara', year: 2007, isbn: '978-979-97312-6-5', cat: 'Sejarah & Sains', price: 'Rp 215.000', stock: 0, cover: 'uploads/covers/rumah-kaca.jpg', desc: 'Penutup Tetralogi Buru yang berkisah dari sudut pandang Jacques Pangemanann dalam mengawasi pergerakan nasional.' },
+        'notasi': { title: 'Notasi', author: 'Morra Quatro', publisher: 'GagasMedia', year: 2012, isbn: '978-979-780-585-2', cat: 'Seni & Musik', price: 'Rp 98.000', stock: 15, cover: 'uploads/covers/notasi.jpg', desc: 'Kisah cinta dan persahabatan berlatar mahasiswa teknik di Yogyakarta dengan sentuhan melodi musik.' }
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const params = new URLSearchParams(window.location.search);
+        const key = params.get('book') || 'bumi-manusia';
+        const b = BOOKS_DB[key] || BOOKS_DB['bumi-manusia'];
+
+        document.title = b.title + ' - PustakaMart';
+        document.getElementById('bookCover').src = b.cover;
+        document.getElementById('bookCover').alt = b.title;
+        document.getElementById('bookCatPill').textContent = b.cat;
+        document.getElementById('bookTitle').textContent = b.title;
+        document.getElementById('bookAuthor').textContent = 'oleh ' + b.author;
+        document.getElementById('bookPublisher').textContent = b.publisher;
+        document.getElementById('bookYear').textContent = b.year;
+        document.getElementById('bookIsbn').textContent = b.isbn;
+        document.getElementById('bookCategory').textContent = b.cat;
+        document.getElementById('bookDesc').textContent = b.desc;
+        document.getElementById('bookPrice').textContent = b.price;
+
+        const stockEl = document.getElementById('bookStockBadge');
+        const actionEl = document.getElementById('bookActionBox');
+        const role = localStorage.getItem('pm_auth_role');
+
+        if (role === 'user') {
+            const pubNav = document.getElementById('publicNavbar');
+            const usrNav = document.getElementById('userAreaNavbar');
+            const backLink = document.getElementById('backToCatalogLink');
+            if (pubNav) pubNav.style.display = 'none';
+            if (usrNav) usrNav.style.display = 'block';
+            if (backLink) backLink.href = 'user-catalog.html';
+        }
+
+        if (b.stock <= 0) {
+            stockEl.innerHTML = `<span style="display:inline-block; background:#fee2e2; color:#b91c1c; font-size:0.8rem; font-weight:700; padding:4px 12px; border-radius:20px;">✖ Stok Habis</span>`;
+            actionEl.innerHTML = `<div style="background:#fef2f2; border:1px solid #fecaca; color:#b91c1c; padding:12px; border-radius:8px; font-weight:700; font-size:0.88rem;">Maaf, buku ini sementara sedang habis stok.</div>`;
+        } else {
+            stockEl.innerHTML = `<span style="display:inline-block; background:#dcfce7; color:#15803d; font-size:0.8rem; font-weight:700; padding:4px 12px; border-radius:20px;">Stok Tersedia: ${b.stock} pcs</span>`;
+            if (role === 'user') {
+                actionEl.innerHTML = `<a href="cart.html" onclick="alert('Buku ditambahkan ke keranjang belanja!')" style="background:#800000; color:white; font-weight:700; padding:14px; border-radius:10px; display:block; text-decoration:none;">🛒 + Tambah ke Keranjang Belanja</a>`;
+            } else {
+                actionEl.innerHTML = `<a href="login.html" style="background:#5c0000; color:white; font-weight:700; padding:14px; border-radius:10px; display:block; text-decoration:none;">Login untuk Membeli Buku Ini</a>`;
+            }
+        }
+
+        // Render related books
+        const relGrid = document.getElementById('relatedBooksGrid');
+        const relKeys = Object.keys(BOOKS_DB).filter(k => k !== key).slice(0, 4);
+        relGrid.innerHTML = relKeys.map(k => {
+            const rb = BOOKS_DB[k];
+            return `
+                <a href="book-detail.html?book=${k}" class="book-card" style="text-decoration:none; color:inherit;">
+                    <div class="book-cover"><img src="${rb.cover}" alt="${rb.title}"></div>
+                    <div class="book-body">
+                        <span class="book-category">${rb.cat}</span>
+                        <h3 class="book-title">${rb.title}</h3>
+                        <div class="book-author">${rb.author}</div>
+                        <div class="book-footer"><span class="book-price">${rb.price}</span></div>
+                    </div>
+                </a>
+            `;
+        }).join('');
+    });
+</script>
+</body>
+</html>

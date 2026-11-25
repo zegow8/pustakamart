@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keranjang Belanja - User Area - PustakaMart</title>
+    <link rel="icon" type="image/png" href="images/pustakamart.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+        html, body { width: 100%; max-width: 100vw; overflow-x: hidden; margin: 0; padding: 0; background-color: var(--bg-main); font-family: 'Inter', sans-serif; }
+        body { display: flex; flex-direction: column; min-height: 100vh; min-width: 0; }
+        .badge-cart { background: #800000; color: white; font-size: 0.72rem; font-weight: 800; padding: 2px 7px; border-radius: 12px; line-height: 1.2; }
+        .badge-notif { background: #dc2626; color: white; font-size: 0.65rem; padding: 2px 6px; border-radius: 10px; font-weight: 700; margin-left: 4px; }
+        .status-badge { font-size: 0.72rem; font-weight: 700; padding: 3px 8px; border-radius: 14px; white-space: nowrap; display: inline-block; }
+        .filter-pill { cursor: pointer; padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; text-decoration: none; border: 1.5px solid #e2e8f0; background: white; color: #475569; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s ease; }
+        .filter-pill:hover { border-color: #800000; color: #800000; }
+        .filter-pill.active { background: #800000 !important; color: white !important; border-color: #800000 !important; }
+    </style>
+<script src="assets/js/script.js"></script>
+<script>checkAuthGuard("user");</script>
+</head>
+<body>
+
+<nav class="navbar-user" style="background:white; border-bottom:2px solid #800000; box-shadow:0 1px 3px rgba(0,0,0,0.05); width:100%; min-width:0;">
+    <div class="container" style="max-width:1200px; margin:0 auto; padding:0 16px;">
+        <!-- Baris Atas -->
+        <div class="navbar-user-top" style="display:flex; justify-content:space-between; align-items:center; padding:12px 0;">
+            <a href="user-dashboard.html" class="brand" style="display:inline-flex; align-items:center; gap:9px; text-decoration:none;">
+                <img src="images/pustakamart.png" alt="PustakaMart" style="height:34px; width:34px; object-fit:contain;">
+                <span style="font-size:1.4rem; font-weight:800; color:var(--primary); letter-spacing:-0.5px;">PUSTAKAMART</span>
+            </a>
+            <div class="navbar-user-icons" style="display:flex; gap:20px; align-items:center;">
+                <a href="user-catalog.html" class="" style="color:var(--text-main); font-size:0.9rem; font-weight:600; text-decoration:none;">📚 Katalog Buku</a>
+                <a href="cart.html" class="active" style="display:inline-flex; align-items:center; gap:6px; color:var(--text-main); font-size:0.9rem; font-weight:600; text-decoration:none;">
+                    <span>🛒 Keranjang</span>
+                    <span class="badge-cart">2</span>
+                </a>
+                <a href="user-notifications.html" style="display:inline-flex; align-items:center; gap:5px; color:var(--text-main); font-size:0.9rem; font-weight:600; text-decoration:none;"><span>🔔 Notifikasi</span><span class="badge-notif" style="margin-left:0;">2</span></a>
+                <a href="profile.html" class="" style="color:var(--text-main); font-size:0.9rem; font-weight:600; text-decoration:none;">👤 rain</a>
+                <a href="index.html" class="logout-link" style="color:var(--danger) !important; font-size:0.9rem; font-weight:600; text-decoration:none;">Logout</a>
+            </div>
+        </div>
+        <!-- Baris Bawah (Tab) - HAPUS NOTIFIKASI -->
+        <div class="navbar-user-bottom" style="border-top:1px solid #fee2e2; display:flex; gap:24px; padding:0; overflow-x:auto; white-space:nowrap;">
+            <a href="user-dashboard.html" class="" style="color:#64748b; font-weight:600; font-size:0.9rem; text-decoration:none; padding:12px 0; border-bottom:3px solid transparent;">Beranda</a>
+            <a href="user-catalog.html" class="" style="color:#64748b; font-weight:600; font-size:0.9rem; text-decoration:none; padding:12px 0; border-bottom:3px solid transparent;">Katalog Buku</a>
+            <a href="transactions.html" class="" style="color:#64748b; font-weight:600; font-size:0.9rem; text-decoration:none; padding:12px 0; border-bottom:3px solid transparent;">Riwayat Pembelian</a>
+            <a href="user-chat.html" style="color:#64748b; font-weight:600; font-size:0.9rem; text-decoration:none; padding:12px 0; border-bottom:3px solid transparent;">💬 Contact to Admin <span class="badge-notif" style="background:#2563eb;">3</span></a>
+                <a href="user-notifications.html" style="color:#64748b; font-weight:600; font-size:0.9rem; text-decoration:none; padding:12px 0; border-bottom:3px solid transparent;">🔔 Notifikasi <span class="badge-notif">2</span></a>
+            <a href="profile.html" class="" style="color:#64748b; font-weight:600; font-size:0.9rem; text-decoration:none; padding:12px 0; border-bottom:3px solid transparent;">Pengaturan Profil</a>
+        </div>
+    </div>
+</nav>
+
+<div class="page-wrap" style="max-width:1200px; width:100%; margin:0 auto; padding:24px 16px; flex:1; min-width:0; box-sizing:border-box;">
+    
+    <div style="margin-bottom: 24px;">
+        <h1 style="font-size: 2rem; font-weight: 800; color: #4A0000; margin: 0 0 6px;">Keranjang Belanja</h1>
+        <p style="color: #64748b; font-size: 0.95rem; margin: 0;">Periksa kembali daftar buku fisik yang akan Anda pesan.</p>
+    </div>
+    <div style="display:grid; grid-template-columns: 2fr 1fr; gap:24px;">
+        <div style="background:white; border:1px solid #fee2e2; border-radius:16px; padding:20px; box-shadow:0 2px 8px rgba(0,0,0,0.03);">
+            <!-- Item 1: Notasi -->
+            <div style="display:flex; gap:16px; align-items:center; padding-bottom:16px; border-bottom:1px solid #f1f5f9;">
+                <img src="uploads/covers/notasi.jpg" alt="Notasi" style="width:70px; height:95px; object-fit:cover; border-radius:8px;">
+                <div style="flex:1;">
+                    <span style="font-size:0.75rem; color:#800000; background:#FFF0F0; padding:2px 8px; border-radius:6px; font-weight:700;">Fiksi</span>
+                    <h4 style="font-size:1rem; font-weight:700; color:#1e293b; margin:4px 0 2px;">Notasi</h4>
+                    <p style="font-size:0.8rem; color:#64748b; margin:0 0 6px;">Morra Quatro</p>
+                    <div style="font-weight:800; color:#800000;">Rp 98.000</div>
+                </div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <button style="width:28px; height:28px; border:1px solid #cbd5e1; background:white; border-radius:4px; font-weight:700;">-</button>
+                    <span style="font-weight:700; width:20px; text-align:center;">1</span>
+                    <button style="width:28px; height:28px; border:1px solid #cbd5e1; background:white; border-radius:4px; font-weight:700;">+</button>
+                </div>
+                <button style="background:none; border:none; color:#ef4444; font-size:1.1rem; cursor:pointer;">🗑️</button>
+            </div>
+            <!-- Item 2: How to Win Friends -->
+            <div style="display:flex; gap:16px; align-items:center; padding-top:16px;">
+                <img src="uploads/covers/how-to-win-friends.jpg" alt="How to Win Friends" style="width:70px; height:95px; object-fit:cover; border-radius:8px;">
+                <div style="flex:1;">
+                    <span style="font-size:0.75rem; color:#800000; background:#FFF0F0; padding:2px 8px; border-radius:6px; font-weight:700;">Pengembangan Diri</span>
+                    <h4 style="font-size:1rem; font-weight:700; color:#1e293b; margin:4px 0 2px;">How to Win Friends and Influence People</h4>
+                    <p style="font-size:0.8rem; color:#64748b; margin:0 0 6px;">Dale Carnegie</p>
+                    <div style="font-weight:800; color:#800000;">Rp 89.000</div>
+                </div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <button style="width:28px; height:28px; border:1px solid #cbd5e1; background:white; border-radius:4px; font-weight:700;">-</button>
+                    <span style="font-weight:700; width:20px; text-align:center;">1</span>
+                    <button style="width:28px; height:28px; border:1px solid #cbd5e1; background:white; border-radius:4px; font-weight:700;">+</button>
+                </div>
+                <button style="background:none; border:none; color:#ef4444; font-size:1.1rem; cursor:pointer;">🗑️</button>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div style="background:white; border:1px solid #fee2e2; border-radius:16px; padding:22px; box-shadow:0 2px 8px rgba(0,0,0,0.03); height:fit-content;">
+            <h3 style="font-size:1.15rem; font-weight:800; color:#1e293b; margin:0 0 16px;">Ringkasan Belanja</h3>
+            <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:0.9rem; color:#475569;">
+                <span>Total Harga (2 barang)</span>
+                <strong>Rp 187.000</strong>
+            </div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:14px; font-size:0.9rem; color:#475569;">
+                <span>Estimasi Ongkir</span>
+                <span style="color:#10b981; font-weight:700;">Dihitung di checkout</span>
+            </div>
+            <div style="border-top:1.5px dashed #e2e8f0; padding-top:14px; display:flex; justify-content:space-between; margin-bottom:20px; font-size:1.1rem; font-weight:800; color:#800000;">
+                <span>Total Tagihan</span>
+                <span>Rp 187.000</span>
+            </div>
+            <a href="checkout.html" style="display:block; text-align:center; background:#800000; color:white; padding:12px; border-radius:10px; font-weight:700; text-decoration:none;">Lanjut ke Pembayaran &rarr;</a>
+        </div>
+    </div>
+    
+</div>
+
+    <footer style="background:#0F172A; color:white; border-top:1px solid #1e293b; padding:36px 0 24px; margin-top:auto;">
+        <div class="container" style="max-width:1200px; margin:0 auto; padding:0 16px;">
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:28px; padding-bottom:28px; border-bottom:1px solid rgba(255,255,255,0.1);">
+                <div>
+                    <div style="font-weight:800; font-size:1.15rem; color:white; margin-bottom:10px; display:flex; align-items:center; gap:9px;">
+                        <img src="images/pustakamart.png" alt="PustakaMart" style="height:30px; width:30px; object-fit:contain; background:white; border-radius:6px; padding:2px;">
+                        <span>PUSTAKAMART</span>
+                    </div>
+                    <p style="font-size:0.85rem; color:rgba(255,255,255,0.6); line-height:1.6; margin:0 0 12px;">
+                        Platform Toko Buku Fisik Online terpercaya dengan kurasi ribuan judul original, transaksi aman, dan pengiriman ke seluruh nusantara.
+                    </p>
+                    <div style="font-size:0.8rem; color:#f87171; font-weight:600;">
+                        ★ 100% E-Commerce Bookstore Resmi
+                    </div>
+                </div>
+                <div>
+                    <div style="font-weight:700; font-size:0.85rem; text-transform:uppercase; color:#94a3b8; margin-bottom:12px; letter-spacing:0.05em;">Navigasi Cepat</div>
+                    <ul style="list-style:none; padding:0; margin:0; font-size:0.85rem; display:flex; flex-direction:column; gap:8px;">
+                        <li><a href="index.html" style="color:rgba(255,255,255,0.75); text-decoration:none;">Beranda</a></li>
+                        <li><a href="catalog.html" style="color:rgba(255,255,255,0.75); text-decoration:none;">Katalog Buku Fisik</a></li>
+                        <li><a href="book-detail-out-of-stock.html" style="color:#f87171; text-decoration:none;">Buku Stok Habis (Demo)</a></li>
+                        <li><a href="cart.html" style="color:rgba(255,255,255,0.75); text-decoration:none;">Keranjang Belanja</a></li>
+                        <li><a href="about.html" style="color:rgba(255,255,255,0.75); text-decoration:none;">Tentang Kami (About Us)</a></li>
+                    </ul>
+                </div>
+                <div style="background:rgba(255,255,255,0.05); padding:16px 18px; border-radius:12px; border:1px solid rgba(255,255,255,0.1);">
+                    <div style="font-weight:700; font-size:0.85rem; text-transform:uppercase; color:#60a5fa; margin-bottom:8px;">
+                        💬 Hubungi Pengembang
+                    </div>
+                    <div style="font-size:0.8rem; color:rgba(255,255,255,0.7); margin-bottom:10px;">
+                        Proyek Uji Sertifikasi Kompetensi (USK) Junior Web Developer (JWD)
+                    </div>
+                    <div style="display:flex; flex-direction:column; gap:6px; font-size:0.825rem;">
+                        <span style="color:#cbd5e1;">📱 WhatsApp: <strong style="color:white;">081547184307</strong></span>
+                        <span style="color:#cbd5e1;">📸 Instagram: <strong style="color:white;">@eddlyaa__</strong></span>
+                        <span style="color:#cbd5e1;">💻 GitHub: <strong style="color:white;">@zegow8</strong></span>
+                    </div>
+                </div>
+            </div>
+            <div style="padding-top:18px; font-size:0.75rem; color:rgba(255,255,255,0.4); text-align:center;">
+                &copy; 2026 PustakaMart. All rights reserved. Dibuat dengan cinta untuk USK JWD.
+            </div>
+        </div>
+    </footer>
+    <script src="assets/js/script.js"></script>
+    </body>
+    </html>
+    

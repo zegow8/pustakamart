@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Pesanan Admin - Admin PustakaMart</title>
+    <link rel="icon" type="image/png" href="images/pustakamart.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+        html, body { max-width: 100vw; overflow-x: hidden; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        .admin-layout { display: flex; min-height: 100vh; background: #f8fafc; max-width: 100vw; overflow-x: hidden; }
+        
+        /* Sidebar */
+        .sidebar { width: 260px; background: white; border-right: 1px solid #e2e8f0; flex-shrink: 0; display: flex; flex-direction: column; }
+        .sidebar-brand { padding: 20px 24px; font-weight: 800; font-size: 1.15rem; color: #800000; border-bottom: 1px solid #e2e8f0; letter-spacing: 0.05em; display: flex; align-items: center; gap: 12px; }
+        
+        .sidebar-menu { list-style: none; padding: 0; margin: 0; flex: 1; overflow-y: auto; }
+        .sidebar-menu a { display: block; padding: 11px 24px; color: #475569; font-weight: 600; font-size: 0.9rem; text-decoration: none; border-left: 4px solid transparent; transition: all 0.2s; }
+        .sidebar-menu a:hover, .sidebar-menu a.active { background: #eff6ff; color: #800000; border-left-color: #800000; font-weight: 700; }
+        
+        /* Pembagi Menu */
+        .menu-header { padding: 18px 24px 6px; font-size: 0.7rem; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em; }
+        
+        /* Konten Utama */
+        .main-content { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+        .topbar { background: white; padding: 16px 32px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; }
+        .content-wrapper { padding: 32px; flex: 1; overflow-y: auto; }
+        
+        /* Status Badge & Filter Pill */
+        .status-badge { font-size: 0.72rem; font-weight: 700; padding: 3px 8px; border-radius: 14px; white-space: nowrap; display: inline-block; }
+        .filter-pill { cursor: pointer; padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; text-decoration: none; border: 1.5px solid #e2e8f0; background: white; color: #475569; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s ease; }
+        .filter-pill:hover { border-color: #800000; color: #800000; }
+        .filter-pill.active { background: #800000 !important; color: white !important; border-color: #800000 !important; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .admin-layout { flex-direction: column; }
+            .sidebar { width: 100%; border-right: none; border-bottom: 1px solid #e2e8f0; }
+            .sidebar-brand { padding: 12px 16px; font-size: 1rem; }
+            .sidebar-menu { display: flex; overflow-x: auto; white-space: nowrap; padding: 4px 8px; gap: 4px; }
+            .sidebar-menu a { border-left: none; border-bottom: 2.5px solid transparent; padding: 8px 10px; font-size: 0.78rem; border-radius: 6px; }
+            .sidebar-menu a.active { border-left: none; border-bottom-color: #800000; background: #FFF0F0; }
+            .menu-header { display: none; }
+            .topbar { padding: 10px 14px; font-size: 0.85rem; }
+            .content-wrapper { padding: 14px 10px; }
+        }
+    </style>
+<script src="assets/js/script.js"></script>
+<script>checkAuthGuard("admin");</script>
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Sidebar Admin (Plek Ketiplek Screenshot 3) -->
+        <div class="sidebar">
+            <div class="sidebar-brand">
+                <img src="images/pustakamart.png" alt="PustakaMart" style="height:32px; width:32px; object-fit:contain;">
+                <div>
+                    <div style="font-size:1.05rem; font-weight:800; color:#800000; line-height:1.15;">PUSTAKAMART</div>
+                    <div style="font-size:0.85rem; font-weight:800; color:#800000;">ADMIN</div>
+                </div>
+            </div>
+            <ul class="sidebar-menu">
+                <li class="menu-header">Utama</li>
+                <li><a href="admin-dashboard.html" class="">Dashboard</a></li>
+
+                <li class="menu-header">Manajemen Buku</li>
+                <li><a href="admin-books.html" class="">Data Buku</a></li>
+                <li><a href="admin-categories.html" class="">Kategori Buku</a></li>
+
+                <li class="menu-header">Pesanan & Transaksi</li>
+                <li><a href="admin-orders.html" class="active">List Pesanan Buku</a></li>
+                <li><a href="admin-revenue.html">?? Laporan Pendapatan</a></li>
+
+                <li class="menu-header">Layanan Pelanggan</li>
+                <li>
+                    <a href="admin-dashboard.html" style="display:flex; justify-content:space-between; align-items:center;">
+                        <span>💬 LiveChat User</span>
+                        <span style="background:#ef4444; color:white; font-size:0.65rem; padding:2px 7px; border-radius:10px; font-weight:800;">2</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="admin-dashboard.html" style="display:flex; justify-content:space-between; align-items:center;">
+                        <span>📬 Pesan Kontak Tamu</span>
+                        <span style="background:#800000; color:white; font-size:0.65rem; padding:2px 7px; border-radius:10px; font-weight:800;">1</span>
+                    </a>
+                </li>
+
+                <li class="menu-header">Sistem</li>
+                <li><a href="admin-users.html">List User Terdaftar</a></li>
+                <li><a href="admin-profile.html">Profil Admin</a></li>
+                
+                <li style="padding: 24px;">
+                    <a href="index.html" style="color: #ef4444; font-weight: 700; text-decoration: none; font-size: 0.9rem;">Logout</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Konten Utama -->
+        <div class="main-content">
+            <div class="topbar">
+                <strong style="color: #1e293b;">Halo, Admin PustakaMart</strong>
+                <a href="index.html" class="btn btn-outline btn-sm" style="border:1.5px solid #800000; color:#800000; padding:5px 14px; border-radius:6px; text-decoration:none; font-weight:600; font-size:0.85rem;">Lihat Website</a>
+            </div>
+            
+            <div class="content-wrapper">
+                
+    <div style="margin-bottom: 20px;">
+        <a href="admin-orders.html" style="color:#800000; text-decoration:none; font-weight:700; font-size:0.9rem;">&larr; Kembali ke List Pesanan</a>
+    </div>
+    <div style="background:white; border:1px solid #e2e8f0; border-radius:16px; padding:28px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #e2e8f0; padding-bottom:18px; margin-bottom:20px;">
+            <div>
+                <h2 style="font-size:1.4rem; font-weight:800; color:#1e293b; margin:0 0 4px;">Detail Pesanan #RP-20261124-A1098</h2>
+                <div style="color:#64748b; font-size:0.85rem;">Waktu Checkout: 24 November 2026, 08:30 WIB</div>
+            </div>
+            <span class="status-badge" style="background:#fef3c7; color:#92400e; font-size:0.85rem; padding:6px 14px;">⏳ Menunggu ACC Pembayaran</span>
+        </div>
+        <div style="display:grid; grid-template-columns: 2fr 1fr; gap:28px;">
+            <div>
+                <h4 style="font-size:1rem; font-weight:700; color:#1e293b; margin:0 0 12px;">Item Yang Dipesan</h4>
+                <div style="display:flex; gap:16px; align-items:center; padding:14px; border:1px solid #f1f5f9; border-radius:10px;">
+                    <img src="uploads/covers/notasi.jpg" alt="Notasi" style="width:60px; height:80px; object-fit:cover; border-radius:6px;">
+                    <div style="flex:1;">
+                        <h4 style="font-size:1rem; font-weight:700; color:#1e293b; margin:0 0 4px;">Notasi</h4>
+                        <div style="font-size:0.85rem; color:#64748b;">1 x Rp 98.000</div>
+                    </div>
+                    <div style="font-weight:800; color:#800000;">Rp 98.000</div>
+                </div>
+                <div style="margin-top:20px;">
+                    <h4 style="font-size:1rem; font-weight:700; color:#1e293b; margin:0 0 10px;">Informasi Pembeli</h4>
+                    <p style="font-size:0.88rem; color:#475569; margin:0 0 4px;"><strong>Nama:</strong> rain</p>
+                    <p style="font-size:0.88rem; color:#475569; margin:0 0 4px;"><strong>Telepon:</strong> 081234567890</p>
+                    <p style="font-size:0.88rem; color:#475569; margin:0;"><strong>Alamat:</strong> Jl. Melati No. 15, RT 02/05, Kebayoran Baru, Jakarta Selatan, 12160</p>
+                </div>
+            </div>
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:20px;">
+                <h4 style="font-size:1rem; font-weight:800; color:#1e293b; margin:0 0 14px;">⚙️ Kelola Status Pembayaran &amp; Pesanan</h4>
+                <div style="margin-bottom:14px; font-size:0.9rem;">
+                    <div style="color:#64748b; margin-bottom:4px;">Metode Pembayaran:</div>
+                    <strong>Transfer Bank Mandiri</strong>
+                </div>
+                <div style="margin-bottom:14px; font-size:0.9rem;">
+                    <div style="color:#64748b; margin-bottom:4px;">Total Tagihan:</div>
+                    <strong style="color:#800000; font-size:1.2rem;">Rp 217.000</strong>
+                </div>
+
+                <!-- BUKTI TRANSFER PEMBAYARAN -->
+                <div style="margin-bottom:18px; padding:12px; background:white; border-radius:8px; border:1px solid #e2e8f0;">
+                    <div style="font-size:0.75rem; color:#64748b; font-weight:700; text-transform:uppercase; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
+                        <span>📸 Bukti Transfer Pembayaran</span>
+                        <span style="font-size:0.7rem; background:#dcfce7; color:#166534; padding:2px 8px; border-radius:4px; font-weight:700;">Terunggah</span>
+                    </div>
+                    <div style="border-radius:6px; overflow:hidden; border:1px solid #e2e8f0; background:#f8fafc; margin-bottom:8px; text-align:center; padding:4px;">
+                        <a href="uploads/receipts/receipt-sample.jpg" target="_blank" title="Klik untuk memperbesar bukti transfer">
+                            <img src="uploads/receipts/receipt-sample.jpg" alt="Bukti Transfer" style="max-width:100%; max-height:200px; object-fit:contain; border-radius:4px; display:block; margin:0 auto;">
+                        </a>
+                    </div>
+                    <div style="text-align:center;">
+                        <a href="uploads/receipts/receipt-sample.jpg" target="_blank" style="font-size:0.8rem; font-weight:700; color:#800000; text-decoration:none;">
+                            🔍 Klik untuk Lihat Ukuran Penuh &rarr;
+                        </a>
+                    </div>
+                </div>
+
+                <form onsubmit="event.preventDefault(); const st = document.getElementById('orderActionStatus').value; alert('Status pesanan berhasil diperbarui menjadi: ' + st);" style="display:flex; flex-direction:column; gap:10px;">
+                    <label style="font-size:0.82rem; font-weight:700; color:#1e293b;">Tindakan Konfirmasi Pesanan</label>
+                    <select id="orderActionStatus" required style="width:100%; padding:10px; border:1px solid #cbd5e1; border-radius:8px; font-size:0.88rem; background:white;">
+                        <option value="" disabled selected>-- Pilih: Dikemas atau Ditolak --</option>
+                        <option value="Processing (Dikemas)">📦 Dikemas (ACC Pembayaran &amp; Siapkan Buku)</option>
+                        <option value="Rejected (Ditolak)">❌ Tolak Pesanan / Pembayaran Tidak Valid</option>
+                    </select>
+                    <button type="submit" style="background:#800000; color:white; border:none; padding:11px; border-radius:8px; font-weight:700; cursor:pointer;">Simpan Status Pesanan</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+            </div>
+        </div>
+    </div>
+</body>
+</html>
