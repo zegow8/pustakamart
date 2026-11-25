@@ -66,6 +66,25 @@
     </div>
 </div>
 
+<!-- ============ GRAFIK PENJUALAN & DISTRIBUSI STATUS ============ -->
+<div style="display:grid; grid-template-columns: 1.6fr 1fr; gap:24px; margin-bottom:24px;" class="admin-dash-grid">
+    <div class="panel" style="margin:0; padding:20px;">
+        <div class="panel-header flex-between mb-3">
+            <h3 class="panel-title" style="margin:0;">📈 Grafik Tren Penjualan (7 Hari Terakhir)</h3>
+            <a href="/admin/reports/revenue" style="font-size:0.82rem; color:var(--primary); font-weight:700; text-decoration:none;">Detail Laporan &rarr;</a>
+        </div>
+        <div style="position:relative; height:240px; width:100%;">
+            <canvas id="dashboardSalesChart"></canvas>
+        </div>
+    </div>
+    <div class="panel" style="margin:0; padding:20px;">
+        <h3 class="panel-title mb-3" style="margin:0 0 12px;">📊 Distribusi Status Pesanan</h3>
+        <div style="position:relative; height:240px; width:100%; display:flex; align-items:center; justify-content:center;">
+            <canvas id="dashboardStatusChart"></canvas>
+        </div>
+    </div>
+</div>
+
 <!-- ============ 2 KOLOM: PESANAN TERBARU & STOK RENDAH ============ -->
 <div style="display:grid; grid-template-columns: 1.4fr 1fr; gap:24px;" class="admin-dash-grid">
     <!-- Kolom Kiri: Pesanan Masuk Terbaru -->
@@ -187,4 +206,64 @@
     .admin-dash-grid { grid-template-columns: 1fr !important; }
 }
 </style>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const salesCtx = document.getElementById('dashboardSalesChart').getContext('2d');
+    const grad = salesCtx.createLinearGradient(0, 0, 0, 240);
+    grad.addColorStop(0, 'rgba(128, 0, 0, 0.25)');
+    grad.addColorStop(1, 'rgba(128, 0, 0, 0.0)');
+
+    new Chart(salesCtx, {
+        type: 'line',
+        data: {
+            labels: {!! json_encode($salesChartLabels) !!},
+            datasets: [{
+                label: 'Omzet Penjualan (Rp)',
+                data: {!! json_encode($salesChartValues) !!},
+                borderColor: '#800000',
+                backgroundColor: grad,
+                borderWidth: 3,
+                pointBackgroundColor: '#800000',
+                pointRadius: 4,
+                fill: true,
+                tension: 0.35
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) { return 'Rp ' + value.toLocaleString('id-ID'); }
+                    }
+                }
+            }
+        }
+    });
+
+    const statusCtx = document.getElementById('dashboardStatusChart').getContext('2d');
+    new Chart(statusCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Menunggu ACC', 'Dikemas', 'Dikirim', 'Selesai'],
+            datasets: [{
+                data: [{{ $ordWaiting }}, {{ $ordProcessing }}, {{ $ordShipped }}, {{ $ordCompleted }}],
+                backgroundColor: ['#fb923c', '#facc15', '#6366f1', '#22c55e'],
+                borderWidth: 2,
+                borderColor: '#ffffff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } }
+            }
+        }
+    });
+</script>
 @endsection

@@ -63,6 +63,7 @@
 
                 <li class="menu-header">Pesanan & Transaksi</li>
                 <li><a href="/admin/orders" class="{{ request()->is('admin/orders*') ? 'active' : '' }}">List Pesanan Buku</a></li>
+                <li><a href="/admin/reports/revenue" class="{{ request()->is('admin/reports*') ? 'active' : '' }}">💰 Laporan Pendapatan</a></li>
 
                 <li class="menu-header">Layanan Pelanggan</li>
                 <li>

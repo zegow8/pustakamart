@@ -51,6 +51,11 @@ Route::middleware(['user'])->group(function () {
     Route::post('/user/transactions/{id}/upload-receipt', [OrderController::class, 'uploadReceipt']);
     Route::post('/user/transactions/cancel', [OrderController::class, 'cancel']);
 
+    // Notifikasi
+    Route::get('/user/notifications', [App\Http\Controllers\User\NotificationController::class, 'index']);
+    Route::get('/user/notifications/{id}/read', [App\Http\Controllers\User\NotificationController::class, 'markRead']);
+    Route::post('/user/notifications/read-all', [App\Http\Controllers\User\NotificationController::class, 'markAllRead']);
+
     // Profil
     Route::get('/user/profile', [ProfileController::class, 'index']);
     Route::post('/user/profile', [ProfileController::class, 'update']);
@@ -97,6 +102,9 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/orders/{id}/print', [App\Http\Controllers\Admin\OrderController::class, 'printInvoice']);
     Route::get('/orders/{id}', [App\Http\Controllers\Admin\OrderController::class, 'show']);
     Route::post('/orders/update/{id}', [App\Http\Controllers\Admin\OrderController::class, 'update']);
+
+    // Laporan Pendapatan
+    Route::get('/reports/revenue', [App\Http\Controllers\Admin\ReportController::class, 'revenue']);
 
     // List User Terdaftar (Sesuai PDF BNSP)
     Route::get('/users', [App\Http\Controllers\Admin\UserController::class, 'index']);

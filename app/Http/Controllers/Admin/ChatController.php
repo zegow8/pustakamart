@@ -125,6 +125,13 @@ class ChatController extends Controller
             'is_read' => 0
         ]);
 
+        \App\Models\Notification::create([
+            'user_id' => $request->user_id,
+            'title' => 'Balasan Baru dari CS 💬',
+            'message' => 'Admin PustakaMart membalas pesan LiveChat Anda: "' . \Illuminate\Support\Str::limit(trim($request->message), 60) . '"',
+            'link' => '/user/chat'
+        ]);
+
         return redirect('/admin/chats?user_id=' . $request->user_id)->with('success', 'Pesan berhasil dikirim ke pelanggan.');
     }
 }

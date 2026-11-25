@@ -25,14 +25,13 @@
                 <li><a href="/" class="{{ request()->is('/') ? 'active' : '' }}">Beranda</a></li>
                 <li><a href="/catalog" class="{{ request()->is('catalog') ? 'active' : '' }}">Katalog Buku</a></li>
                 <li><a href="/about" class="{{ request()->is('about') ? 'active' : '' }}">About Us</a></li>
+                <li><a href="/contact" class="{{ request()->is('contact*') ? 'active' : '' }}">Hubungi Kami</a></li>
                 @auth
                     @if(auth()->user()->role === 'user')
                         <li><a href="/user/chat" class="{{ request()->is('user/chat*') ? 'active' : '' }}">💬 LiveChat CS</a></li>
                     @elseif(auth()->user()->role === 'admin')
                         <li><a href="/admin/chats" class="{{ request()->is('admin/chats*') ? 'active' : '' }}">💬 Chat Pelanggan</a></li>
                     @endif
-                @else
-                    <li><a href="/contact" class="{{ request()->is('contact*') ? 'active' : '' }}">Hubungi Kami</a></li>
                 @endauth
             </ul>
             <div class="navbar-actions">
@@ -52,6 +51,7 @@
             <a href="/">Beranda</a>
             <a href="/catalog">Katalog Buku</a>
             <a href="/about">About Us</a>
+            <a href="/contact">Hubungi Kami</a>
             @auth
                 @if(auth()->user()->role === 'user')
                     <a href="/user/chat">💬 LiveChat CS</a>
@@ -60,7 +60,6 @@
                 @endif
                 <a href="{{ auth()->user()->role === 'admin' ? '/admin/dashboard' : '/user/dashboard' }}">Dashboard</a>
             @else
-                <a href="/contact">Hubungi Kami</a>
                 <a href="/login">Login</a>
                 <a href="/register" style="color:var(--primary);">Daftar Gratis</a>
             @endauth

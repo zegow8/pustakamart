@@ -165,6 +165,14 @@ class CheckoutController extends Controller
             // HANYA HAPUS ITEM YANG DICHECKOUT DARI KERANJANG
             CartDetail::whereIn('id', $cartItems->pluck('id'))->delete();
 
+            // Kirim Notifikasi ke User
+            \App\Models\Notification::create([
+                'user_id' => $userId,
+                'title' => 'Menunggu Konfirmasi Admin ⏳',
+                'message' => "Pesanan #$invoice beserta bukti transfer berhasil dibuat dan sedang menunggu konfirmasi pembayaran dari admin.",
+                'link' => '/user/transactions/' . $order->id
+            ]);
+
             DB::commit();
             return redirect('/user/transactions')->with('success', "Pesanan #$invoice berhasil dibuat! Pembayaran Anda sedang menunggu konfirmasi dari admin.");
 

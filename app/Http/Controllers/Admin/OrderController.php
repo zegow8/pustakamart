@@ -110,6 +110,30 @@ class OrderController extends Controller
             'tracking_number' => $trackingNumber
         ]);
 
+        // Kirim Notifikasi Otomatis ke User
+        $notifTitle = 'Update Status Pesanan #' . $order->invoice_code;
+        $notifMsg = "Status pesanan #{$order->invoice_code} diperbarui menjadi: {$newStatus}.";
+        if ($newStatus === 'Processing') {
+            $notifTitle = 'Pembayaran Diterima! 📦';
+            $notifMsg = "Pembayaran untuk pesanan #{$order->invoice_code} telah di-ACC admin. Buku sedang dikemas rapi.";
+        } elseif ($newStatus === 'Shipped') {
+            $notifTitle = 'Pesanan Sedang Dikirim! 🚚';
+            $notifMsg = "Pesanan #{$order->invoice_code} telah diserahkan ke kurir ekspedisi. No. Resi: {$trackingNumber}";
+        } elseif ($newStatus === 'Completed') {
+            $notifTitle = 'Pesanan Selesai! ✅';
+            $notifMsg = "Terima kasih telah berbelanja di PustakaMart! Pesanan #{$order->invoice_code} telah selesai diterima.";
+        } elseif ($newStatus === 'Rejected') {
+            $notifTitle = 'Pesanan Ditolak ❌';
+            $notifMsg = "Mohon maaf, pesanan #{$order->invoice_code} ditolak karena bukti pembayaran tidak sesuai. Stok telah dikembalikan.";
+        }
+
+        \App\Models\Notification::create([
+            'user_id' => $order->user_id,
+            'title' => $notifTitle,
+            'message' => $notifMsg,
+            'link' => '/user/transactions/' . $order->id
+        ]);
+
         return back()->with('success', 'Status pesanan berhasil diperbarui menjadi: ' . $newStatus . '.');
     }
 

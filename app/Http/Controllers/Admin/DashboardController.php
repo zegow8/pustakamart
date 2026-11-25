@@ -54,11 +54,24 @@ class DashboardController extends Controller
             ->take(5)
             ->get();
 
+        // Grafik Penjualan 7 Hari Terakhir
+        $salesChartLabels = [];
+        $salesChartValues = [];
+        for ($i = 6; $i >= 0; $i--) {
+            $date = \Carbon\Carbon::now()->subDays($i);
+            $salesChartLabels[] = $date->format('d M');
+            $dayTotal = Order::whereIn('status', ['Processing', 'Shipped', 'Completed'])
+                ->whereDate('created_at', $date->format('Y-m-d'))
+                ->sum('total');
+            $salesChartValues[] = (float) $dayTotal;
+        }
+
         return view('admin.dashboard', compact(
             'totalBooks', 'totalCategories', 'totalUsers', 'totalOrders', 'totalStock',
             'revenueThisMonth', 'revenueAllTime',
             'ordWaiting', 'ordProcessing', 'ordShipped', 'ordCompleted', 'ordCancelled',
-            'recentOrders', 'recentUsers', 'lowStockBooks'
+            'recentOrders', 'recentUsers', 'lowStockBooks',
+            'salesChartLabels', 'salesChartValues'
         ));
     }
 }

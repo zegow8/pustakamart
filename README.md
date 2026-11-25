@@ -19,8 +19,9 @@
 
 ---
 
-## 🎨 Desain UI/UX (Figma Prototype)
-Seluruh antarmuka pengguna (User & Admin) dirancang berdasarkan rancangan visual prototype resmi di Figma:
+## 🎨 Desain UI/UX & Live Preview
+Seluruh antarmuka pengguna (Public, User & Admin) dirancang berdasarkan rancangan visual prototype resmi di Figma dan dapat langsung dicoba melalui GitHub Pages:
+* 🌐 **Live Preview (GitHub Pages)**: [https://zegow8.github.io/pustakamart/](https://zegow8.github.io/pustakamart/) *(Static Showcase lengkap di folder `docs/` dengan tombol Quick Login Demo Admin & User)*
 * 🔗 **Figma Project Design**: [Desain PUSTAKA-MART di Figma](https://www.figma.com/design/s1z7sQt0eEIfVH2ZMmfFEI/PUSTAKA-MART?node-id=0-1&p=f&t=XBuVDAfT4pT44wPe-0)
 
 ---
@@ -330,12 +331,12 @@ Akses aplikasi melalui browser di alamat:
 
 ## 🔑 Akun Pengujian Demo (Default Credentials)
 
-Anda dapat menggunakan akun bawaan hasil seeder berikut untuk pengujian:
+Anda dapat menggunakan akun berikut untuk pengujian (baik di aplikasi Laravel lokal maupun di **GitHub Pages Preview** yang juga menyediakan tombol **Login Cepat Admin / User**):
 
-| Role Akun | Email Pengguna | Kata Sandi | Hak Akses Utama |
-| :--- | :--- | :--- | :--- |
-| **Administrator** | `admin@pustakamart.com` | `password` | Kelola Katalog Buku, Kategori, Verifikasi Bukti Bayar, Update Resi, LiveChat, User Management |
-| **Customer / User** | `user@pustakamart.com` | `password` | Eksplorasi Katalog, Keranjang, Checkout Transfer Bank, Upload Bukti Transfer, LiveChat |
+| Role Akun | Nama | Email Pengguna | Kata Sandi | Hak Akses Utama |
+| :--- | :--- | :--- | :--- | :--- |
+| **Administrator** | `administrator` | `admin@pustakamart.com` | `admin123` | Kelola Katalog Buku, Kategori, Verifikasi Bukti Bayar, Update Resi, LiveChat, User Management |
+| **Customer / User** | `rain` | `rain@gmail.com` | `123456` | Eksplorasi Katalog, Keranjang, Checkout Transfer Bank, Upload Bukti Transfer, LiveChat |
 
 > *Atau daftarkan akun baru melalui tombol **Daftar Akun** (`/register`) dengan NIK 16 digit dan nomor telepon.*
 
@@ -356,6 +357,7 @@ pustakamart/
 ├── database/
 │   ├── migrations/                # Skema pembuatan seluruh tabel database
 │   └── seeders/                   # Data awal seeder pengguna dan buku
+├── docs/                          # GitHub Pages static preview (Publik, User Area & Admin Panel responsif)
 ├── public/
 │   ├── assets/                    # File CSS kustom dan JavaScript
 │   ├── images/                    # Logo resmi PustakaMart

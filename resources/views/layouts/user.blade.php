@@ -74,6 +74,15 @@
                             </span>
                         @endif
                     </a>
+                    @php
+                        $userNotifCount = \App\Models\Notification::where('user_id', auth()->id())->where('is_read', false)->count();
+                    @endphp
+                    <a href="/user/notifications" class="{{ request()->is('user/notifications*') ? 'active' : '' }}" style="display:inline-flex; align-items:center; gap:5px;">
+                        <span>🔔 Notifikasi</span>
+                        @if($userNotifCount > 0)
+                            <span class="badge-notif" style="margin-left:0;">{{ $userNotifCount }}</span>
+                        @endif
+                    </a>
                     <a href="/user/profile" class="{{ request()->is('user/profile*') ? 'active' : '' }}">👤 {{ auth()->user()->name }}</a>
                     <form action="/logout" method="POST" style="display:inline;" onsubmit="return confirm('Apakah Anda yakin ingin keluar dari akun PustakaMart?');">
                         @csrf
